@@ -33,7 +33,6 @@ function NovaLib:CreateWindow(Settings)
 			if input.KeyCode == minimizeKey then
 				minimized = not minimized
 				mainFrameHolder.Visible = not minimized
-				print("Minimize toggled:", minimized)
 			end
 		end
 	end)
