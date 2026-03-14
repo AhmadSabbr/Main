@@ -28,18 +28,15 @@ function NovaLib:CreateWindow(Settings)
 	mainFrameHolder.Position = UDim2.new(0.317180604,0,0.172029704,0)
 	mainFrameHolder.Size = UDim2.new(0,580,0,530)
 	
-	if minimizeKeybind and minimizeKey then
-		UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	UserInputService.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.Keyboard then
 			if input.KeyCode == minimizeKey then
 				minimized = not minimized
-				if minimized then
-					mainFrameHolder.Visible = false
-				else
-					mainFrameHolder.Visible = true
-				end
+				mainFrameHolder.Visible = not minimized
+				print("Minimize toggled:", minimized)
 			end
-		end)
-	end
+		end
+	end)
 	
 	local mainFrameHolderUICorner = Instance.new("UICorner")
 	mainFrameHolderUICorner.CornerRadius = UDim.new(0,32)
