@@ -410,180 +410,180 @@ function NovaLib:CreateWindow(Settings)
 	RunService.Heartbeat:Connect(update)
 
 	function CreateNotification(Name, Content, Timer)
-	local notificationFrame = Instance.new("Frame")
-	notificationFrame.Name = "notificationFrame"
-	notificationFrame.Parent = notificationFrameHolder
-	notificationFrame.BackgroundColor3 = Color3.fromRGB(60, 13, 100)
-	notificationFrame.BackgroundTransparency = 1
-	notificationFrame.BorderSizePixel = 0
-	notificationFrame.Size = UDim2.new(0, 250, 0, 151)
+		local notificationFrame = Instance.new("Frame")
+		notificationFrame.Name = "notificationFrame"
+		notificationFrame.Parent = notificationFrameHolder
+		notificationFrame.BackgroundColor3 = Color3.fromRGB(60, 13, 100)
+		notificationFrame.BackgroundTransparency = 1
+		notificationFrame.BorderSizePixel = 0
+		notificationFrame.Size = UDim2.new(0, 250, 0, 151)
 
-	local tweenInfo = TweenInfo.new(0.5)
-	TweenService:Create(notificationFrame, tweenInfo, {
-		BackgroundTransparency = 0.4
-	}):Play()
+		local tweenInfo = TweenInfo.new(0.5)
+		TweenService:Create(notificationFrame, tweenInfo, {
+			BackgroundTransparency = 0.4
+		}):Play()
 
-	local notificationFrametitle = Instance.new("TextLabel")
-	notificationFrametitle.Name = "title"
-	notificationFrametitle.Parent = notificationFrame
-	notificationFrametitle.BackgroundTransparency = 1
-	notificationFrametitle.Position = UDim2.new(0.1, 0, 0, 0)
-	notificationFrametitle.Size = UDim2.new(0, 200, 0, 44)
-	notificationFrametitle.Font = Enum.Font.Arimo
-	notificationFrametitle.RichText = true
-	notificationFrametitle.Text = "<b>" .. Name .. "</b>"
-	notificationFrametitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-	notificationFrametitle.TextSize = 14
+		local notificationFrametitle = Instance.new("TextLabel")
+		notificationFrametitle.Name = "title"
+		notificationFrametitle.Parent = notificationFrame
+		notificationFrametitle.BackgroundTransparency = 1
+		notificationFrametitle.Position = UDim2.new(0.1, 0, 0, 0)
+		notificationFrametitle.Size = UDim2.new(0, 200, 0, 44)
+		notificationFrametitle.Font = Enum.Font.Arimo
+		notificationFrametitle.RichText = true
+		notificationFrametitle.Text = "<b>" .. Name .. "</b>"
+		notificationFrametitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+		notificationFrametitle.TextSize = 14
 
-	local notificationFrameUICorner = Instance.new("UICorner")
-	notificationFrameUICorner.CornerRadius = UDim.new(0, 16)
-	notificationFrameUICorner.Parent = notificationFrame
+		local notificationFrameUICorner = Instance.new("UICorner")
+		notificationFrameUICorner.CornerRadius = UDim.new(0, 16)
+		notificationFrameUICorner.Parent = notificationFrame
 
-	local notificationFramecontent = Instance.new("TextLabel")
-	notificationFramecontent.Name = "content"
-	notificationFramecontent.Parent = notificationFrame
-	notificationFramecontent.BackgroundTransparency = 1
-	notificationFramecontent.Position = UDim2.new(0, 0, 0.29, 0)
-	notificationFramecontent.Size = UDim2.new(0, 250, 0, 107)
-	notificationFramecontent.Font = Enum.Font.Arimo
-	notificationFramecontent.RichText = true
-	notificationFramecontent.Text = "<b>" .. Content .. "</b>"
-	notificationFramecontent.TextColor3 = Color3.fromRGB(255, 255, 255)
-	notificationFramecontent.TextSize = 14
-	notificationFramecontent.TextXAlignment = Enum.TextXAlignment.Left
+		local notificationFramecontent = Instance.new("TextLabel")
+		notificationFramecontent.Name = "content"
+		notificationFramecontent.Parent = notificationFrame
+		notificationFramecontent.BackgroundTransparency = 1
+		notificationFramecontent.Position = UDim2.new(0, 0, 0.29, 0)
+		notificationFramecontent.Size = UDim2.new(0, 250, 0, 107)
+		notificationFramecontent.Font = Enum.Font.Arimo
+		notificationFramecontent.RichText = true
+		notificationFramecontent.Text = "<b>" .. Content .. "</b>"
+		notificationFramecontent.TextColor3 = Color3.fromRGB(255, 255, 255)
+		notificationFramecontent.TextSize = 14
+		notificationFramecontent.TextXAlignment = Enum.TextXAlignment.Left
 
-	local padding = Instance.new("UIPadding")
-	padding.Parent = notificationFramecontent
-	padding.PaddingBottom = UDim.new(0, 100)
-	padding.PaddingLeft = UDim.new(0, 4)
+		local padding = Instance.new("UIPadding")
+		padding.Parent = notificationFramecontent
+		padding.PaddingBottom = UDim.new(0, 100)
+		padding.PaddingLeft = UDim.new(0, 4)
 
-	task.wait(Timer)
+		task.wait(Timer)
 
-	if notificationFrame then
-		notificationFrame:Destroy()
+		if notificationFrame then
+			notificationFrame:Destroy()
+		end
 	end
-end
 
 	function CreateDialog(Title, Dialog, Timer, YesCallback)
-	local dialogFrame = Instance.new("Frame")
-	dialogFrame.Name = "dialogFrame"
-	dialogFrame.Parent = mainFrameHolder
-	dialogFrame.BackgroundColor3 = Color3.fromRGB(70, 19, 115)
-	dialogFrame.BackgroundTransparency = 1
-	dialogFrame.BorderSizePixel = 0
-	dialogFrame.Position = UDim2.new(0.240386546, 0, 0.335849047, 0)
-	dialogFrame.Size = UDim2.new(0, 300, 0, 200)
+		local dialogFrame = Instance.new("Frame")
+		dialogFrame.Name = "dialogFrame"
+		dialogFrame.Parent = mainFrameHolder
+		dialogFrame.BackgroundColor3 = Color3.fromRGB(70, 19, 115)
+		dialogFrame.BackgroundTransparency = 1
+		dialogFrame.BorderSizePixel = 0
+		dialogFrame.Position = UDim2.new(0.240386546, 0, 0.335849047, 0)
+		dialogFrame.Size = UDim2.new(0, 300, 0, 200)
 
-	local corner = Instance.new("UICorner", dialogFrame)
+		local corner = Instance.new("UICorner", dialogFrame)
 
-	local optionsHolder = Instance.new("Frame")
-	optionsHolder.Parent = dialogFrame
-	optionsHolder.BackgroundColor3 = Color3.fromRGB(48, 19, 99)
-	optionsHolder.BackgroundTransparency = 1
-	optionsHolder.BorderSizePixel = 0
-	optionsHolder.Position = UDim2.new(0, 0, 0.643286765, 0)
-	optionsHolder.Size = UDim2.new(0, 300, 0, 71)
+		local optionsHolder = Instance.new("Frame")
+		optionsHolder.Parent = dialogFrame
+		optionsHolder.BackgroundColor3 = Color3.fromRGB(48, 19, 99)
+		optionsHolder.BackgroundTransparency = 1
+		optionsHolder.BorderSizePixel = 0
+		optionsHolder.Position = UDim2.new(0, 0, 0.643286765, 0)
+		optionsHolder.Size = UDim2.new(0, 300, 0, 71)
 
-	local holderCorner = Instance.new("UICorner", optionsHolder)
-	holderCorner.CornerRadius = UDim.new(0,4)
+		local holderCorner = Instance.new("UICorner", optionsHolder)
+		holderCorner.CornerRadius = UDim.new(0,4)
 
-	local confirmOption = Instance.new("TextButton")
-	confirmOption.Parent = optionsHolder
-	confirmOption.BackgroundTransparency = 1
-	confirmOption.Position = UDim2.new(0.098,0,0.141,0)
-	confirmOption.Size = UDim2.new(0,110,0,50)
-	confirmOption.Font = Enum.Font.Arimo
-	confirmOption.RichText = true
-	confirmOption.Text = "<b>Confirm</b>"
-	confirmOption.TextColor3 = Color3.fromRGB(255,255,255)
-	confirmOption.TextSize = 14
-	confirmOption.TextTransparency = 1
+		local confirmOption = Instance.new("TextButton")
+		confirmOption.Parent = optionsHolder
+		confirmOption.BackgroundTransparency = 1
+		confirmOption.Position = UDim2.new(0.098,0,0.141,0)
+		confirmOption.Size = UDim2.new(0,110,0,50)
+		confirmOption.Font = Enum.Font.Arimo
+		confirmOption.RichText = true
+		confirmOption.Text = "<b>Confirm</b>"
+		confirmOption.TextColor3 = Color3.fromRGB(255,255,255)
+		confirmOption.TextSize = 14
+		confirmOption.TextTransparency = 1
 
-	local confirmOptionUIStroke = Instance.new("UIStroke")
-	confirmOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	confirmOptionUIStroke.Parent = confirmOption
-	confirmOptionUIStroke.Color = Color3.fromRGB(94,51,153)
-	confirmOptionUIStroke.Thickness = 1.5
-	confirmOptionUIStroke.Transparency = 1
+		local confirmOptionUIStroke = Instance.new("UIStroke")
+		confirmOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+		confirmOptionUIStroke.Parent = confirmOption
+		confirmOptionUIStroke.Color = Color3.fromRGB(94,51,153)
+		confirmOptionUIStroke.Thickness = 1.5
+		confirmOptionUIStroke.Transparency = 1
 
-	local confirmCorner = Instance.new("UICorner", confirmOption)
-	confirmCorner.CornerRadius = UDim.new(0,4)
+		local confirmCorner = Instance.new("UICorner", confirmOption)
+		confirmCorner.CornerRadius = UDim.new(0,4)
 
-	local cancelOption = Instance.new("TextButton")
-	cancelOption.Parent = optionsHolder
-	cancelOption.BackgroundTransparency = 1
-	cancelOption.Position = UDim2.new(0.525,0,0.141,0)
-	cancelOption.Size = UDim2.new(0,110,0,50)
-	cancelOption.Font = Enum.Font.Arimo
-	cancelOption.RichText = true
-	cancelOption.Text = "<b>Cancel</b>"
-	cancelOption.TextColor3 = Color3.fromRGB(255,255,255)
-	cancelOption.TextSize = 14
-	cancelOption.TextTransparency = 1
+		local cancelOption = Instance.new("TextButton")
+		cancelOption.Parent = optionsHolder
+		cancelOption.BackgroundTransparency = 1
+		cancelOption.Position = UDim2.new(0.525,0,0.141,0)
+		cancelOption.Size = UDim2.new(0,110,0,50)
+		cancelOption.Font = Enum.Font.Arimo
+		cancelOption.RichText = true
+		cancelOption.Text = "<b>Cancel</b>"
+		cancelOption.TextColor3 = Color3.fromRGB(255,255,255)
+		cancelOption.TextSize = 14
+		cancelOption.TextTransparency = 1
 
-	local cancelOptionUIStroke = Instance.new("UIStroke")
-	cancelOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-	cancelOptionUIStroke.Parent = cancelOption
-	cancelOptionUIStroke.Color = Color3.fromRGB(94,51,153)
-	cancelOptionUIStroke.Thickness = 1.5
-	cancelOptionUIStroke.Transparency = 1
+		local cancelOptionUIStroke = Instance.new("UIStroke")
+		cancelOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+		cancelOptionUIStroke.Parent = cancelOption
+		cancelOptionUIStroke.Color = Color3.fromRGB(94,51,153)
+		cancelOptionUIStroke.Thickness = 1.5
+		cancelOptionUIStroke.Transparency = 1
 
-	local cancelCorner = Instance.new("UICorner", cancelOption)
-	cancelCorner.CornerRadius = UDim.new(0,4)
+		local cancelCorner = Instance.new("UICorner", cancelOption)
+		cancelCorner.CornerRadius = UDim.new(0,4)
 
-	local titleLabel = Instance.new("TextLabel")
-	titleLabel.Parent = dialogFrame
-	titleLabel.BackgroundTransparency = 1
-	titleLabel.Position = UDim2.new(0.0966, 0, 0.07, 0)
-	titleLabel.Size = UDim2.new(0, 200, 0, 50)
-	titleLabel.Font = Enum.Font.Arimo
-	titleLabel.RichText = true
-	titleLabel.Text = "<b>"..Title.."</b>"
-	titleLabel.TextColor3 = Color3.fromRGB(255,255,255)
-	titleLabel.TextSize = 18
-	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
-	titleLabel.TextTransparency = 1
+		local titleLabel = Instance.new("TextLabel")
+		titleLabel.Parent = dialogFrame
+		titleLabel.BackgroundTransparency = 1
+		titleLabel.Position = UDim2.new(0.0966, 0, 0.07, 0)
+		titleLabel.Size = UDim2.new(0, 200, 0, 50)
+		titleLabel.Font = Enum.Font.Arimo
+		titleLabel.RichText = true
+		titleLabel.Text = "<b>"..Title.."</b>"
+		titleLabel.TextColor3 = Color3.fromRGB(255,255,255)
+		titleLabel.TextSize = 18
+		titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+		titleLabel.TextTransparency = 1
 
-	local dialogLabel = Instance.new("TextLabel")
-	dialogLabel.Parent = dialogFrame
-	dialogLabel.BackgroundTransparency = 1
-	dialogLabel.Position = UDim2.new(0.0966, 0, 0.285, 0)
-	dialogLabel.Size = UDim2.new(0, 200, 0, 37)
-	dialogLabel.Font = Enum.Font.Arimo
-	dialogLabel.RichText = true
-	dialogLabel.Text = "<b>"..Dialog.."</b>"
-	dialogLabel.TextColor3 = Color3.fromRGB(255,255,255)
-	dialogLabel.TextSize = 14
-	dialogLabel.TextTransparency = 1
-	dialogLabel.TextXAlignment = Enum.TextXAlignment.Left
+		local dialogLabel = Instance.new("TextLabel")
+		dialogLabel.Parent = dialogFrame
+		dialogLabel.BackgroundTransparency = 1
+		dialogLabel.Position = UDim2.new(0.0966, 0, 0.285, 0)
+		dialogLabel.Size = UDim2.new(0, 200, 0, 37)
+		dialogLabel.Font = Enum.Font.Arimo
+		dialogLabel.RichText = true
+		dialogLabel.Text = "<b>"..Dialog.."</b>"
+		dialogLabel.TextColor3 = Color3.fromRGB(255,255,255)
+		dialogLabel.TextSize = 14
+		dialogLabel.TextTransparency = 1
+		dialogLabel.TextXAlignment = Enum.TextXAlignment.Left
 
-	local tweenInfo = TweenInfo.new(0.5)
-	TweenService:Create(dialogFrame, tweenInfo, {BackgroundTransparency = 0.1}):Play()
-	TweenService:Create(optionsHolder, tweenInfo, {BackgroundTransparency = 0.4}):Play()
-	TweenService:Create(titleLabel, tweenInfo, {TextTransparency = 0}):Play()
-	TweenService:Create(dialogLabel, tweenInfo, {TextTransparency = 0}):Play()
-	TweenService:Create(confirmOption, tweenInfo, {TextTransparency = 0}):Play()
-	TweenService:Create(cancelOption, tweenInfo, {TextTransparency = 0}):Play()
-	TweenService:Create(confirmOptionUIStroke, tweenInfo, {Transparency = 0}):Play()
-	TweenService:Create(cancelOptionUIStroke, tweenInfo, {Transparency = 0}):Play()
+		local tweenInfo = TweenInfo.new(0.5)
+		TweenService:Create(dialogFrame, tweenInfo, {BackgroundTransparency = 0.1}):Play()
+		TweenService:Create(optionsHolder, tweenInfo, {BackgroundTransparency = 0.4}):Play()
+		TweenService:Create(titleLabel, tweenInfo, {TextTransparency = 0}):Play()
+		TweenService:Create(dialogLabel, tweenInfo, {TextTransparency = 0}):Play()
+		TweenService:Create(confirmOption, tweenInfo, {TextTransparency = 0}):Play()
+		TweenService:Create(cancelOption, tweenInfo, {TextTransparency = 0}):Play()
+		TweenService:Create(confirmOptionUIStroke, tweenInfo, {Transparency = 0}):Play()
+		TweenService:Create(cancelOptionUIStroke, tweenInfo, {Transparency = 0}):Play()
 
-	confirmOption.MouseButton1Click:Connect(function()
-		if YesCallback then YesCallback() end
-		dialogFrame:Destroy()
-	end)
-
-	cancelOption.MouseButton1Click:Connect(function()
-		dialogFrame:Destroy()
-	end)
-
-	if Timer then
-		task.delay(Timer, function()
-			if dialogFrame then
-				dialogFrame:Destroy()
-			end
+		confirmOption.MouseButton1Click:Connect(function()
+			if YesCallback then YesCallback() end
+			dialogFrame:Destroy()
 		end)
+
+		cancelOption.MouseButton1Click:Connect(function()
+			dialogFrame:Destroy()
+		end)
+
+		if Timer then
+			task.delay(Timer, function()
+				if dialogFrame then
+					dialogFrame:Destroy()
+				end
+			end)
+		end
 	end
-end
 
 	Window.Gui = ScreenGui
 
@@ -1406,116 +1406,116 @@ end
 		end
 
 		function Tab:CreateSlider(Settings)
-	local Slider = {}
-	local Title = Settings.Title or ""
-	local Min = Settings.Min or 0
-	local Max = Settings.Max or 100
-	local Value = Settings.Default or Min
-	local Callback = Settings.Callback or function() end
-	local dragging = false
+			local Slider = {}
+			local Title = Settings.Title or ""
+			local Min = Settings.Min or 0
+			local Max = Settings.Max or 100
+			local Value = Settings.Default or Min
+			local Callback = Settings.Callback or function() end
+			local dragging = false
 
-	local sliderHolder = Instance.new("Frame")
-	sliderHolder.Parent = self.featuresContainer
-	sliderHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
-	sliderHolder.BackgroundTransparency = 0.75
-	sliderHolder.BorderSizePixel = 0
-	sliderHolder.Size = UDim2.new(0,300,0,50)
+			local sliderHolder = Instance.new("Frame")
+			sliderHolder.Parent = self.featuresContainer
+			sliderHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
+			sliderHolder.BackgroundTransparency = 0.75
+			sliderHolder.BorderSizePixel = 0
+			sliderHolder.Size = UDim2.new(0,300,0,50)
 
-	local corner = Instance.new("UICorner",sliderHolder)
+			local corner = Instance.new("UICorner",sliderHolder)
 
-	local title = Instance.new("TextLabel")
-	title.Parent = sliderHolder
-	title.BackgroundTransparency = 1
-	title.Size = UDim2.new(0,130,0,50)
-	title.Font = Enum.Font.Arimo
-	title.RichText = true
-	title.Text = "<b>"..Title.."</b>"
-	title.TextColor3 = Color3.fromRGB(255,255,255)
-	title.TextSize = 16
-	title.TextXAlignment = Enum.TextXAlignment.Left
+			local title = Instance.new("TextLabel")
+			title.Parent = sliderHolder
+			title.BackgroundTransparency = 1
+			title.Size = UDim2.new(0,130,0,50)
+			title.Font = Enum.Font.Arimo
+			title.RichText = true
+			title.Text = "<b>"..Title.."</b>"
+			title.TextColor3 = Color3.fromRGB(255,255,255)
+			title.TextSize = 16
+			title.TextXAlignment = Enum.TextXAlignment.Left
 
-	local pad = Instance.new("UIPadding",title)
-	pad.PaddingLeft = UDim.new(0,15)
+			local pad = Instance.new("UIPadding",title)
+			pad.PaddingLeft = UDim.new(0,15)
 
-	local valueText = Instance.new("TextLabel")
-	valueText.Parent = sliderHolder
-	valueText.BackgroundTransparency = 1
-	valueText.Position = UDim2.new(0.483333319,0,0,0)
-	valueText.Size = UDim2.new(0,60,0,50)
-	valueText.Font = Enum.Font.Arimo
-	valueText.RichText = true
-	valueText.Text = "<b>"..Value.."</b>"
-	valueText.TextColor3 = Color3.fromRGB(255,255,255)
-	valueText.TextSize = 14
+			local valueText = Instance.new("TextLabel")
+			valueText.Parent = sliderHolder
+			valueText.BackgroundTransparency = 1
+			valueText.Position = UDim2.new(0.483333319,0,0,0)
+			valueText.Size = UDim2.new(0,60,0,50)
+			valueText.Font = Enum.Font.Arimo
+			valueText.RichText = true
+			valueText.Text = "<b>"..Value.."</b>"
+			valueText.TextColor3 = Color3.fromRGB(255,255,255)
+			valueText.TextSize = 14
 
-	local line = Instance.new("Frame")
-	line.Parent = sliderHolder
-	line.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	line.BackgroundTransparency = 0.8
-	line.BorderSizePixel = 0
-	line.Position = UDim2.new(0.64,0,0.5,-2)
-	line.Size = UDim2.new(0,100,0,4)
+			local line = Instance.new("Frame")
+			line.Parent = sliderHolder
+			line.BackgroundColor3 = Color3.fromRGB(255,255,255)
+			line.BackgroundTransparency = 0.8
+			line.BorderSizePixel = 0
+			line.Position = UDim2.new(0.64,0,0.5,-2)
+			line.Size = UDim2.new(0,100,0,4)
 
-	local lineCorner = Instance.new("UICorner",line)
+			local lineCorner = Instance.new("UICorner",line)
 
-	local dragger = Instance.new("Frame")
-	dragger.Parent = line
-	dragger.BackgroundColor3 = Color3.fromRGB(255,255,255)
-	dragger.BorderSizePixel = 0
-	dragger.AnchorPoint = Vector2.new(0.5,0.5)
-	dragger.Size = UDim2.new(0,15,0,15)
-	dragger.Position = UDim2.new(0,0,0.5,0)
+			local dragger = Instance.new("Frame")
+			dragger.Parent = line
+			dragger.BackgroundColor3 = Color3.fromRGB(255,255,255)
+			dragger.BorderSizePixel = 0
+			dragger.AnchorPoint = Vector2.new(0.5,0.5)
+			dragger.Size = UDim2.new(0,15,0,15)
+			dragger.Position = UDim2.new(0,0,0.5,0)
 
-	local draggerCorner = Instance.new("UICorner",dragger)
+			local draggerCorner = Instance.new("UICorner",dragger)
 
-	local function Update(v)
-		Value = math.clamp(v,Min,Max)
-		local percent = (Value-Min)/(Max-Min)
-		dragger.Position = UDim2.new(percent,0,0.5,0)
-		valueText.Text = "<b>"..Value.."</b>"
-		Callback(Value)
-	end
+			local function Update(v)
+				Value = math.clamp(v,Min,Max)
+				local percent = (Value-Min)/(Max-Min)
+				dragger.Position = UDim2.new(percent,0,0.5,0)
+				valueText.Text = "<b>"..Value.."</b>"
+				Callback(Value)
+			end
 
-	dragger.InputBegan:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = true
+			dragger.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					dragging = true
+				end
+			end)
+
+			UserInputService.InputEnded:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					dragging = false
+				end
+			end)
+
+			UserInputService.InputChanged:Connect(function(input)
+				if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+					local percent = math.clamp((input.Position.X-line.AbsolutePosition.X)/line.AbsoluteSize.X,0,1)
+					local val = math.floor(Min+(Max-Min)*percent+0.5)
+					Update(val)
+				end
+			end)
+
+			function Slider:SetValue(v)
+				Update(v)
+			end
+
+			function Slider:GetValue()
+				return Value
+			end
+
+			Update(Value)
+
+			self.Window._controls = self.Window._controls or {}
+
+			table.insert(self.Window._controls,{
+				Type = "Slider",
+				Title = Title,
+				Object = Slider
+			})
+
+			return Slider
 		end
-	end)
-
-	UserInputService.InputEnded:Connect(function(input)
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			dragging = false
-		end
-	end)
-
-	UserInputService.InputChanged:Connect(function(input)
-		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-			local percent = math.clamp((input.Position.X-line.AbsolutePosition.X)/line.AbsoluteSize.X,0,1)
-			local val = math.floor(Min+(Max-Min)*percent+0.5)
-			Update(val)
-		end
-	end)
-
-	function Slider:SetValue(v)
-		Update(v)
-	end
-
-	function Slider:GetValue()
-		return Value
-	end
-
-	Update(Value)
-
-	self.Window._controls = self.Window._controls or {}
-
-	table.insert(self.Window._controls,{
-		Type = "Slider",
-		Title = Title,
-		Object = Slider
-	})
-
-	return Slider
-end
 
 		function Tab:CreateInput(Settings)
 			local Input = {}
