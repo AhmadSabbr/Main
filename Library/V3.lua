@@ -1202,7 +1202,7 @@ function NovaLib:CreateWindow(Settings)
 
 			local textboxHolder = Instance.new("Frame")
 			textboxHolder.Name = "textboxHolder"
-			textboxHolder.Parent = featuresContainer
+			textboxHolder.Parent = self.featuresContainer
 			textboxHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
 			textboxHolder.BackgroundTransparency = 0.75
 			textboxHolder.BorderSizePixel = 0
@@ -1235,19 +1235,11 @@ function NovaLib:CreateWindow(Settings)
 			TextBox.Position = UDim2.new(0.456666678,0,0.14,0)
 			TextBox.Size = UDim2.new(0,150,0,35)
 			TextBox.Font = Enum.Font.Arimo
-			TextBox.RichText = true
-			TextBox.Text = "<b>Write Your Input Here</b>"
+			TextBox.Text = ""
 			TextBox.TextColor3 = Color3.fromRGB(255,255,255)
 			TextBox.TextSize = 12
-			TextBox.ClearTextOnFocus = true
-			TextBox.ClipsDescendants = true
-			
-			TextBox.FocusLost:Connect(function()
-				if TextBox.Text == "" then
-					TextBox.Text = "<b>Write Your Input Here</b>"
-				end
-			end)
-			
+			TextBox.ClearTextOnFocus = false
+
 			local TextBoxUIStroke = Instance.new("UIStroke")
 			TextBoxUIStroke.Parent = TextBox
 			TextBoxUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -1261,15 +1253,18 @@ function NovaLib:CreateWindow(Settings)
 			TextBox.FocusLost:Connect(function()
 				Callback(TextBox.Text)
 			end)
-			
+
 			function Textbox:GetValue()
 				return TextBox.Text
 			end
 
 			function Textbox:SetValue(v)
 				TextBox.Text = v
+				Callback(v)
 			end
-			
+
+			self._controls = self._controls or {}
+
 			table.insert(self._controls,{
 				Type = "Textbox",
 				Title = Title,
@@ -1284,23 +1279,20 @@ function NovaLib:CreateWindow(Settings)
 			local Title = Settings.Title or ""
 			local Min = Settings.Min or 0
 			local Max = Settings.Max or 100
-			local Default = Settings.Default or Min
+			local Value = Settings.Default or Min
 			local Callback = Settings.Callback or function() end
 			local dragging = false
 
 			local sliderHolder = Instance.new("Frame")
-			sliderHolder.Name = "sliderHolder"
-			sliderHolder.Parent = featuresContainer
-			sliderHolder.BackgroundColor3 = Color3.fromRGB(86, 8, 125)
-			sliderHolder.BackgroundTransparency = 0.750
+			sliderHolder.Parent = self.featuresContainer
+			sliderHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
+			sliderHolder.BackgroundTransparency = 0.75
 			sliderHolder.BorderSizePixel = 0
 			sliderHolder.Size = UDim2.new(0,300,0,50)
 
-			local UICorner = Instance.new("UICorner")
-			UICorner.Parent = sliderHolder
+			local corner = Instance.new("UICorner",sliderHolder)
 
 			local title = Instance.new("TextLabel")
-			title.Name = "title"
 			title.Parent = sliderHolder
 			title.BackgroundTransparency = 1
 			title.Size = UDim2.new(0,130,0,50)
@@ -1311,24 +1303,21 @@ function NovaLib:CreateWindow(Settings)
 			title.TextSize = 16
 			title.TextXAlignment = Enum.TextXAlignment.Left
 
-			local UIPadding = Instance.new("UIPadding")
-			UIPadding.Parent = title
-			UIPadding.PaddingLeft = UDim.new(0,15)
+			local pad = Instance.new("UIPadding",title)
+			pad.PaddingLeft = UDim.new(0,15)
 
-			local value = Instance.new("TextLabel")
-			value.Name = "value"
-			value.Parent = sliderHolder
-			value.BackgroundTransparency = 1
-			value.Position = UDim2.new(0.483333319,0,0,0)
-			value.Size = UDim2.new(0,60,0,50)
-			value.Font = Enum.Font.Arimo
-			value.RichText = true
-			value.Text = "<b>"..tostring(Default).."</b>"
-			value.TextColor3 = Color3.fromRGB(255,255,255)
-			value.TextSize = 14
+			local valueText = Instance.new("TextLabel")
+			valueText.Parent = sliderHolder
+			valueText.BackgroundTransparency = 1
+			valueText.Position = UDim2.new(0.483333319,0,0,0)
+			valueText.Size = UDim2.new(0,60,0,50)
+			valueText.Font = Enum.Font.Arimo
+			valueText.RichText = true
+			valueText.Text = "<b>"..Value.."</b>"
+			valueText.TextColor3 = Color3.fromRGB(255,255,255)
+			valueText.TextSize = 14
 
 			local line = Instance.new("Frame")
-			line.Name = "line"
 			line.Parent = sliderHolder
 			line.BackgroundColor3 = Color3.fromRGB(255,255,255)
 			line.BackgroundTransparency = 0.8
@@ -1336,29 +1325,22 @@ function NovaLib:CreateWindow(Settings)
 			line.Position = UDim2.new(0.64,0,0.46,0)
 			line.Size = UDim2.new(0,100,0,4)
 
-			local lineCorner = Instance.new("UICorner")
-			lineCorner.Parent = line
+			local lineCorner = Instance.new("UICorner",line)
 
 			local dragger = Instance.new("Frame")
-			dragger.Name = "dragger"
 			dragger.Parent = line
 			dragger.BackgroundColor3 = Color3.fromRGB(255,255,255)
 			dragger.BorderSizePixel = 0
-			dragger.Position = UDim2.new(0,0,-1.5,0)
 			dragger.Size = UDim2.new(0,15,0,15)
 
-			local draggerCorner = Instance.new("UICorner")
-			draggerCorner.Parent = dragger
+			local draggerCorner = Instance.new("UICorner",dragger)
 
-			local function setValueFromX(x)
-				local percent = math.clamp((x - line.AbsolutePosition.X) / line.AbsoluteSize.X,0,1)
-				local val = math.floor((Min + (Max - Min) * percent) + 0.5)
-				local dragPercent = (val - Min) / (Max - Min)
-
-				dragger.Position = UDim2.new(dragPercent,0,-1.5,0)
-				value.Text = "<b>"..val.."</b>"
-
-				Callback(val)
+			local function Update(v)
+				Value = math.clamp(v,Min,Max)
+				local percent = (Value-Min)/(Max-Min)
+				dragger.Position = UDim2.new(percent,0,-1.5,0)
+				valueText.Text = "<b>"..Value.."</b>"
+				Callback(Value)
 			end
 
 			dragger.InputBegan:Connect(function(input)
@@ -1375,13 +1357,24 @@ function NovaLib:CreateWindow(Settings)
 
 			UserInputService.InputChanged:Connect(function(input)
 				if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-					setValueFromX(input.Position.X)
+					local percent = math.clamp((input.Position.X-line.AbsolutePosition.X)/line.AbsoluteSize.X,0,1)
+					local val = math.floor(Min+(Max-Min)*percent+0.5)
+					Update(val)
 				end
 			end)
 
-			local startPercent = (Default - Min) / (Max - Min)
-			dragger.Position = UDim2.new(startPercent,0,-1.5,0)
-			
+			function Slider:SetValue(v)
+				Update(v)
+			end
+
+			function Slider:GetValue()
+				return Value
+			end
+
+			Update(Value)
+
+			self._controls = self._controls or {}
+
 			table.insert(self._controls,{
 				Type = "Slider",
 				Title = Title,
@@ -1499,7 +1492,7 @@ function NovaLib:CreateWindow(Settings)
 
 			local dropdownHolder = Instance.new("Frame")
 			dropdownHolder.Name = "dropdownHolder"
-			dropdownHolder.Parent = featuresContainer
+			dropdownHolder.Parent = self.featuresContainer
 			dropdownHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
 			dropdownHolder.BackgroundTransparency = 0.75
 			dropdownHolder.BorderSizePixel = 0
@@ -1536,7 +1529,7 @@ function NovaLib:CreateWindow(Settings)
 			optionButton.TextSize = 14
 			optionButton.TextXAlignment = Enum.TextXAlignment.Left
 			optionButton.ZIndex = 10
-			
+
 			local optionButtonUIStroke = Instance.new("UIStroke")
 			optionButtonUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 			optionButtonUIStroke.Parent = optionButton
@@ -1565,7 +1558,7 @@ function NovaLib:CreateWindow(Settings)
 			optionsHolder.Size = UDim2.new(0,134,0,0)
 			optionsHolder.Visible = false
 			optionsHolder.ZIndex = 20
-			
+
 			local optionsCorner = Instance.new("UICorner", optionsHolder)
 			local layout = Instance.new("UIListLayout", optionsHolder)
 
@@ -1574,22 +1567,16 @@ function NovaLib:CreateWindow(Settings)
 					optionButton.Text = "<b>Options</b>"
 					return
 				end
-
 				local text = table.concat(selected,", ")
-				local maxWidth = optionButton.AbsoluteSize.X - 35
-
-				local size = TextService:GetTextSize(text,optionButton.TextSize,optionButton.Font,Vector2.new(math.huge,math.huge))
-
-				while size.X > maxWidth and #text > 0 do
-					text = text:sub(1,#text-1)
-					size = TextService:GetTextSize(text.."...",optionButton.TextSize,optionButton.Font,Vector2.new(math.huge,math.huge))
-				end
-
-				if text ~= table.concat(selected,", ") then
-					text = text.."..."
-				end
-
 				optionButton.Text = "<b>"..text.."</b>"
+			end
+
+			local function fire()
+				if Multi then
+					Callback(selected)
+				else
+					Callback(selected[1])
+				end
 			end
 
 			local function selectOption(opt)
@@ -1604,9 +1591,8 @@ function NovaLib:CreateWindow(Settings)
 					open = false
 					optionsHolder.Visible = false
 				end
-				
 				updateText()
-				Callback(selected)
+				fire()
 			end
 
 			local function createOption(opt)
@@ -1670,7 +1656,7 @@ function NovaLib:CreateWindow(Settings)
 			end
 
 			function Dropdown:Get()
-				return selected
+				return Multi and selected or selected[1]
 			end
 
 			function Dropdown:Set(v)
@@ -1678,12 +1664,13 @@ function NovaLib:CreateWindow(Settings)
 					selected = v
 				else
 					selected = {v}
-					optionsHolder.Visible = false
-					open = false
 				end
 				updateText()
+				fire()
 			end
-			
+
+			self._controls = self._controls or {}
+
 			table.insert(self._controls,{
 				Type = "Dropdown",
 				Title = Title,
