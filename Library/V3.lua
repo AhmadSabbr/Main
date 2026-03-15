@@ -1,9 +1,9 @@
-local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
 local TextService = game:GetService("TextService")
 local HttpService = game:GetService("HttpService")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
 
 local NovaLib = {}
 
@@ -32,7 +32,7 @@ function NovaLib:CreateWindow(Settings)
 	if not isfolder(ConfigFolder) then
 		makefolder(ConfigFolder)
 	end
-	
+
 	local ScreenGui = Instance.new("ScreenGui")
 	ScreenGui.Name = "Library"
 	ScreenGui.Parent = CoreGui
@@ -601,8 +601,8 @@ function NovaLib:CreateWindow(Settings)
 			configNameTextBox.Position = UDim2.new(0.556666672,0,0.14,0)
 			configNameTextBox.Size = UDim2.new(0,120,0,35)
 			configNameTextBox.Font = Enum.Font.Arimo
-			configNameTextBox.RichText = true
-			configNameTextBox.Text = "<b>...</b>"
+			configNameTextBox.RichText = false
+			configNameTextBox.Text = ""
 			configNameTextBox.TextColor3 = Color3.fromRGB(255,255,255)
 			configNameTextBox.TextSize = 12
 			configNameTextBox.ClipsDescendants = true
@@ -623,7 +623,7 @@ function NovaLib:CreateWindow(Settings)
 				end
 			end)
 
-			self._controls = {}
+			self._controls = self._controls or {}
 			self._configNameBox = configNameTextBox
 		end
 		
@@ -875,7 +875,7 @@ function NovaLib:CreateWindow(Settings)
 			loadConfigButtonButton.ImageTransparency = 1
 
 			loadConfigButtonButton.MouseButton1Click:Connect(function()
-				local name = self._configOptionButton.Text
+				local name = self._configOptionButton.Text:gsub("<.->","")
 				local path = ConfigFolder.."/"..name..".json"
 				if not isfile(path) then return end
 
