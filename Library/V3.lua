@@ -1285,114 +1285,116 @@ end
 		end
 
 		function Tab:CreateSlider(Settings)
-			local Slider = {}
-			local Title = Settings.Title or ""
-			local Min = Settings.Min or 0
-			local Max = Settings.Max or 100
-			local Value = Settings.Default or Min
-			local Callback = Settings.Callback or function() end
-			local dragging = false
+	local Slider = {}
+	local Title = Settings.Title or ""
+	local Min = Settings.Min or 0
+	local Max = Settings.Max or 100
+	local Value = Settings.Default or Min
+	local Callback = Settings.Callback or function() end
+	local dragging = false
 
-			local sliderHolder = Instance.new("Frame")
-			sliderHolder.Parent = self.featuresContainer
-			sliderHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
-			sliderHolder.BackgroundTransparency = 0.75
-			sliderHolder.BorderSizePixel = 0
-			sliderHolder.Size = UDim2.new(0,300,0,50)
+	local sliderHolder = Instance.new("Frame")
+	sliderHolder.Parent = self.featuresContainer
+	sliderHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
+	sliderHolder.BackgroundTransparency = 0.75
+	sliderHolder.BorderSizePixel = 0
+	sliderHolder.Size = UDim2.new(0,300,0,50)
 
-			local corner = Instance.new("UICorner",sliderHolder)
+	local corner = Instance.new("UICorner",sliderHolder)
 
-			local title = Instance.new("TextLabel")
-			title.Parent = sliderHolder
-			title.BackgroundTransparency = 1
-			title.Size = UDim2.new(0,130,0,50)
-			title.Font = Enum.Font.Arimo
-			title.RichText = true
-			title.Text = "<b>"..Title.."</b>"
-			title.TextColor3 = Color3.fromRGB(255,255,255)
-			title.TextSize = 16
-			title.TextXAlignment = Enum.TextXAlignment.Left
+	local title = Instance.new("TextLabel")
+	title.Parent = sliderHolder
+	title.BackgroundTransparency = 1
+	title.Size = UDim2.new(0,130,0,50)
+	title.Font = Enum.Font.Arimo
+	title.RichText = true
+	title.Text = "<b>"..Title.."</b>"
+	title.TextColor3 = Color3.fromRGB(255,255,255)
+	title.TextSize = 16
+	title.TextXAlignment = Enum.TextXAlignment.Left
 
-			local pad = Instance.new("UIPadding",title)
-			pad.PaddingLeft = UDim.new(0,15)
+	local pad = Instance.new("UIPadding",title)
+	pad.PaddingLeft = UDim.new(0,15)
 
-			local valueText = Instance.new("TextLabel")
-			valueText.Parent = sliderHolder
-			valueText.BackgroundTransparency = 1
-			valueText.Position = UDim2.new(0.483333319,0,0,0)
-			valueText.Size = UDim2.new(0,60,0,50)
-			valueText.Font = Enum.Font.Arimo
-			valueText.RichText = true
-			valueText.Text = "<b>"..Value.."</b>"
-			valueText.TextColor3 = Color3.fromRGB(255,255,255)
-			valueText.TextSize = 14
+	local valueText = Instance.new("TextLabel")
+	valueText.Parent = sliderHolder
+	valueText.BackgroundTransparency = 1
+	valueText.Position = UDim2.new(0.483333319,0,0,0)
+	valueText.Size = UDim2.new(0,60,0,50)
+	valueText.Font = Enum.Font.Arimo
+	valueText.RichText = true
+	valueText.Text = "<b>"..Value.."</b>"
+	valueText.TextColor3 = Color3.fromRGB(255,255,255)
+	valueText.TextSize = 14
 
-			local line = Instance.new("Frame")
-			line.Parent = sliderHolder
-			line.BackgroundColor3 = Color3.fromRGB(255,255,255)
-			line.BackgroundTransparency = 0.8
-			line.BorderSizePixel = 0
-			line.Position = UDim2.new(0.64,0,0.46,0)
-			line.Size = UDim2.new(0,100,0,4)
+	local line = Instance.new("Frame")
+	line.Parent = sliderHolder
+	line.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	line.BackgroundTransparency = 0.8
+	line.BorderSizePixel = 0
+	line.Position = UDim2.new(0.64,0,0.5,-2)
+	line.Size = UDim2.new(0,100,0,4)
 
-			local lineCorner = Instance.new("UICorner",line)
+	local lineCorner = Instance.new("UICorner",line)
 
-			local dragger = Instance.new("Frame")
-			dragger.Parent = line
-			dragger.BackgroundColor3 = Color3.fromRGB(255,255,255)
-			dragger.BorderSizePixel = 0
-			dragger.Size = UDim2.new(0,15,0,15)
+	local dragger = Instance.new("Frame")
+	dragger.Parent = line
+	dragger.BackgroundColor3 = Color3.fromRGB(255,255,255)
+	dragger.BorderSizePixel = 0
+	dragger.AnchorPoint = Vector2.new(0.5,0.5)
+	dragger.Size = UDim2.new(0,15,0,15)
+	dragger.Position = UDim2.new(0,0,0.5,0)
 
-			local draggerCorner = Instance.new("UICorner",dragger)
+	local draggerCorner = Instance.new("UICorner",dragger)
 
-			local function Update(v)
-				Value = math.clamp(v,Min,Max)
-				local percent = (Value-Min)/(Max-Min)
-				dragger.Position = UDim2.new(percent,0,-1.5,0)
-				valueText.Text = "<b>"..Value.."</b>"
-				Callback(Value)
-			end
+	local function Update(v)
+		Value = math.clamp(v,Min,Max)
+		local percent = (Value-Min)/(Max-Min)
+		dragger.Position = UDim2.new(percent,0,0.5,0)
+		valueText.Text = "<b>"..Value.."</b>"
+		Callback(Value)
+	end
 
-			dragger.InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
-					dragging = true
-				end
-			end)
-
-			UserInputService.InputEnded:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
-					dragging = false
-				end
-			end)
-
-			UserInputService.InputChanged:Connect(function(input)
-				if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-					local percent = math.clamp((input.Position.X-line.AbsolutePosition.X)/line.AbsoluteSize.X,0,1)
-					local val = math.floor(Min+(Max-Min)*percent+0.5)
-					Update(val)
-				end
-			end)
-
-			function Slider:SetValue(v)
-				Update(v)
-			end
-
-			function Slider:GetValue()
-				return Value
-			end
-
-			Update(Value)
-
-			self.Window._controls = self.Window._controls or {}
-
-			table.insert(self.Window._controls,{
-				Type = "Slider",
-				Title = Title,
-				Object = Slider
-			})
-
-			return Slider
+	dragger.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = true
 		end
+	end)
+
+	UserInputService.InputEnded:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			dragging = false
+		end
+	end)
+
+	UserInputService.InputChanged:Connect(function(input)
+		if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+			local percent = math.clamp((input.Position.X-line.AbsolutePosition.X)/line.AbsoluteSize.X,0,1)
+			local val = math.floor(Min+(Max-Min)*percent+0.5)
+			Update(val)
+		end
+	end)
+
+	function Slider:SetValue(v)
+		Update(v)
+	end
+
+	function Slider:GetValue()
+		return Value
+	end
+
+	Update(Value)
+
+	self.Window._controls = self.Window._controls or {}
+
+	table.insert(self.Window._controls,{
+		Type = "Slider",
+		Title = Title,
+		Object = Slider
+	})
+
+	return Slider
+end
 
 		function Tab:CreateInput(Settings)
 			local Input = {}
