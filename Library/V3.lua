@@ -410,7 +410,6 @@ function NovaLib:CreateWindow(Settings)
 	RunService.Heartbeat:Connect(update)
 
 	local function CreateNotification(Name, Content, Timer)
-
 	local notificationFrame = Instance.new("Frame")
 	notificationFrame.Name = "notificationFrame"
 	notificationFrame.Parent = notificationFrameHolder
@@ -462,6 +461,105 @@ function NovaLib:CreateWindow(Settings)
 
 	if notificationFrame then
 		notificationFrame:Destroy()
+	end
+end
+
+	local function CreateDialog(Title, Dialog, Timer, YesCallback)
+	local dialogFrame = Instance.new("Frame")
+	dialogFrame.Name = "dialogFrame"
+	dialogFrame.Parent = mainFrameHolder
+	dialogFrame.BackgroundColor3 = Color3.fromRGB(70, 19, 115)
+	dialogFrame.BackgroundTransparency = 1
+	dialogFrame.BorderSizePixel = 0
+	dialogFrame.Position = UDim2.new(0.240386546, 0, 0.335849047, 0)
+	dialogFrame.Size = UDim2.new(0, 300, 0, 200)
+
+	local tweenInfo = TweenInfo.new(0.5)
+	TweenService:Create(dialogFrame, tweenInfo, {BackgroundTransparency = 0.1}):Play()
+
+	local corner = Instance.new("UICorner", dialogFrame)
+
+	local optionsHolder = Instance.new("Frame")
+	optionsHolder.Parent = dialogFrame
+	optionsHolder.BackgroundColor3 = Color3.fromRGB(48, 19, 99)
+	optionsHolder.BackgroundTransparency = 0.4
+	optionsHolder.BorderSizePixel = 0
+	optionsHolder.Position = UDim2.new(0, 0, 0.643286765, 0)
+	optionsHolder.Size = UDim2.new(0, 300, 0, 71)
+
+	local holderCorner = Instance.new("UICorner", optionsHolder)
+	holderCorner.CornerRadius = UDim.new(0,4)
+
+	local confirmOption = Instance.new("TextButton")
+	confirmOption.Parent = optionsHolder
+	confirmOption.BackgroundTransparency = 1
+	confirmOption.Position = UDim2.new(0.096, 0, 0.21, 0)
+	confirmOption.Size = UDim2.new(0, 110, 0, 40)
+	confirmOption.Font = Enum.Font.Arimo
+	confirmOption.RichText = true
+	confirmOption.Text = "<b>Confirm</b>"
+	confirmOption.TextColor3 = Color3.fromRGB(255,255,255)
+	confirmOption.TextSize = 14
+
+	local confirmCorner = Instance.new("UICorner", confirmOption)
+	confirmCorner.CornerRadius = UDim.new(0,4)
+
+	local cancelOption = Instance.new("TextButton")
+	cancelOption.Parent = optionsHolder
+	cancelOption.BackgroundTransparency = 1
+	cancelOption.Position = UDim2.new(0.523, 0, 0.24, 0)
+	cancelOption.Size = UDim2.new(0, 110, 0, 36)
+	cancelOption.Font = Enum.Font.Arimo
+	cancelOption.RichText = true
+	cancelOption.Text = "<b>Cancel</b>"
+	cancelOption.TextColor3 = Color3.fromRGB(255,255,255)
+	cancelOption.TextSize = 14
+
+	local cancelCorner = Instance.new("UICorner", cancelOption)
+	cancelCorner.CornerRadius = UDim.new(0,4)
+
+	local titleLabel = Instance.new("TextLabel")
+	titleLabel.Parent = dialogFrame
+	titleLabel.BackgroundTransparency = 1
+	titleLabel.Position = UDim2.new(0.0966, 0, 0.07, 0)
+	titleLabel.Size = UDim2.new(0, 200, 0, 50)
+	titleLabel.Font = Enum.Font.Arimo
+	titleLabel.RichText = true
+	titleLabel.Text = "<b>"..Title.."</b>"
+	titleLabel.TextColor3 = Color3.fromRGB(255,255,255)
+	titleLabel.TextSize = 18
+	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+	local dialogLabel = Instance.new("TextLabel")
+	dialogLabel.Parent = dialogFrame
+	dialogLabel.BackgroundTransparency = 1
+	dialogLabel.Position = UDim2.new(0.0966, 0, 0.285, 0)
+	dialogLabel.Size = UDim2.new(0, 200, 0, 37)
+	dialogLabel.Font = Enum.Font.Arimo
+	dialogLabel.RichText = true
+	dialogLabel.Text = "<b>"..Dialog.."</b>"
+	dialogLabel.TextColor3 = Color3.fromRGB(255,255,255)
+	dialogLabel.TextSize = 14
+	dialogLabel.TextTransparency = 0.2
+	dialogLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+	confirmOption.MouseButton1Click:Connect(function()
+		if YesCallback then
+			YesCallback()
+		end
+		dialogFrame:Destroy()
+	end)
+
+	cancelOption.MouseButton1Click:Connect(function()
+		dialogFrame:Destroy()
+	end)
+
+	if Timer then
+		task.delay(Timer, function()
+			if dialogFrame then
+				dialogFrame:Destroy()
+			end
+		end)
 	end
 end
 
