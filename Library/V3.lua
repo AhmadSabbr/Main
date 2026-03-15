@@ -410,61 +410,59 @@ function NovaLib:CreateWindow(Settings)
 
 	local function CreateNotification(Name, Content, Timer)
 
-		local notificationFrame = Instance.new("Frame")
-		notificationFrame.Name = "notificationFrame"
-		notificationFrame.Parent = notificationFrameHolder
-		notificationFrame.BackgroundColor3 = Color3.fromRGB(60, 13, 100)
-		notificationFrame.BackgroundTransparency = 1
-		notificationFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		notificationFrame.BorderSizePixel = 0
-		notificationFrame.Size = UDim2.new(0, 250, 0, 151)
+	local notificationFrame = Instance.new("Frame")
+	notificationFrame.Name = "notificationFrame"
+	notificationFrame.Parent = notificationFrameHolder
+	notificationFrame.BackgroundColor3 = Color3.fromRGB(60, 13, 100)
+	notificationFrame.BackgroundTransparency = 1
+	notificationFrame.BorderSizePixel = 0
+	notificationFrame.Size = UDim2.new(0, 250, 0, 151)
 
-		local tweenInfo = TweenInfo.new(0.5)
-		TweenService:Create(notificationFrame,tweenInfo,{BackgroundTransparency = 0.4}):Play()
+	local tweenInfo = TweenInfo.new(0.5)
+	TweenService:Create(notificationFrame, tweenInfo, {
+		BackgroundTransparency = 0.4
+	}):Play()
 
-		local notificationFrametitle = Instance.new("TextLabel")
-		notificationFrametitle.Name = "title"
-		notificationFrametitle.Parent = notificationFrame
-		notificationFrametitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		notificationFrametitle.BackgroundTransparency = 1
-		notificationFrametitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		notificationFrametitle.BorderSizePixel = 0
-		notificationFrametitle.Position = UDim2.new(0.1, 0, 0, 0)
-		notificationFrametitle.Size = UDim2.new(0, 200, 0, 44)
-		notificationFrametitle.Font = Enum.Font.Arimo
-		notificationFrametitle.RichText = true
-		notificationFrametitle.Text = "<b>"..Name.."</b>"
-		notificationFrametitle.TextColor3 = Color3.fromRGB(255, 255, 255)
-		notificationFrametitle.TextSize = 14
+	local notificationFrametitle = Instance.new("TextLabel")
+	notificationFrametitle.Name = "title"
+	notificationFrametitle.Parent = notificationFrame
+	notificationFrametitle.BackgroundTransparency = 1
+	notificationFrametitle.Position = UDim2.new(0.1, 0, 0, 0)
+	notificationFrametitle.Size = UDim2.new(0, 200, 0, 44)
+	notificationFrametitle.Font = Enum.Font.Arimo
+	notificationFrametitle.RichText = true
+	notificationFrametitle.Text = "<b>" .. Name .. "</b>"
+	notificationFrametitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+	notificationFrametitle.TextSize = 14
 
-		local notificationFrameUICorner = Instance.new("UICorner")
-		notificationFrameUICorner.CornerRadius = UDim.new(0, 16)
-		notificationFrameUICorner.Parent = notificationFrame
+	local notificationFrameUICorner = Instance.new("UICorner")
+	notificationFrameUICorner.CornerRadius = UDim.new(0, 16)
+	notificationFrameUICorner.Parent = notificationFrame
 
-		local notificationFramecontent = Instance.new("TextLabel")
-		notificationFramecontent.Name = "content"
-		notificationFramecontent.Parent = notificationFrame
-		notificationFramecontent.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		notificationFramecontent.BackgroundTransparency = 1
-		notificationFramecontent.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		notificationFramecontent.BorderSizePixel = 0
-		notificationFramecontent.Position = UDim2.new(0, 0, 0.291390717, 0)
-		notificationFramecontent.Size = UDim2.new(0, 250, 0, 107)
-		notificationFramecontent.Font = Enum.Font.Arimo
-		notificationFramecontent.RichText = true
-		notificationFramecontent.Text = "<b>".. Content .."</b>"
-		notificationFramecontent.TextColor3 = Color3.fromRGB(255, 255, 255)
-		notificationFramecontent.TextSize = 14
-		notificationFramecontent.TextXAlignment = Enum.TextXAlignment.Left
+	local notificationFramecontent = Instance.new("TextLabel")
+	notificationFramecontent.Name = "content"
+	notificationFramecontent.Parent = notificationFrame
+	notificationFramecontent.BackgroundTransparency = 1
+	notificationFramecontent.Position = UDim2.new(0, 0, 0.29, 0)
+	notificationFramecontent.Size = UDim2.new(0, 250, 0, 107)
+	notificationFramecontent.Font = Enum.Font.Arimo
+	notificationFramecontent.RichText = true
+	notificationFramecontent.Text = "<b>" .. Content .. "</b>"
+	notificationFramecontent.TextColor3 = Color3.fromRGB(255, 255, 255)
+	notificationFramecontent.TextSize = 14
+	notificationFramecontent.TextXAlignment = Enum.TextXAlignment.Left
 
-		local notificationFramecontentUIPadding_ = Instance.new("UIPadding")
-		notificationFramecontentUIPadding_.Parent = notificationFramecontent
-		notificationFramecontentUIPadding_.PaddingBottom = UDim.new(0, 100)
-		notificationFramecontentUIPadding_.PaddingLeft = UDim.new(0, 4)
+	local padding = Instance.new("UIPadding")
+	padding.Parent = notificationFramecontent
+	padding.PaddingBottom = UDim.new(0, 100)
+	padding.PaddingLeft = UDim.new(0, 4)
 
-		wait(Timer)
+	task.wait(Timer)
+
+	if notificationFrame then
 		notificationFrame:Destroy()
 	end
+end
 
 	Window.Gui = ScreenGui
 
