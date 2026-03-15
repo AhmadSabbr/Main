@@ -740,9 +740,7 @@ function NovaLib:CreateWindow(Settings)
 				end
 			end
 
-			local visibleCount = math.min(#self._configs,3)
-			local height = visibleCount * 30
-			configOptionsHolder.Size = UDim2.new(0,134,0,height)
+			self._configOptionsHolder.Size = UDim2.new(0,134,0,#self._configs*30)
 
 			configOptionButton.MouseButton1Click:Connect(function()
 				configOptionsHolder.Visible = not configOptionsHolder.Visible
