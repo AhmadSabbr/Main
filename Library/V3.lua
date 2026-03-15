@@ -10,7 +10,6 @@ local NovaLib = {}
 function NovaLib:CreateWindow(Settings)
 	local Title = Settings.Title or ""
 	local Window = {}
-	Window._controls = {}
 	local CurrentTab = nil
 	local dragging = false
 	local startPos, lastMouse
@@ -19,7 +18,7 @@ function NovaLib:CreateWindow(Settings)
 	local minimizeKey = Settings.MinimizeKey
 	local minimized = false
 	local expanded = false
-	
+
 	local writefile = writefile or (function() end)
 	local readfile = readfile or (function() return "" end)
 	local isfile = isfile or (function() return false end)
@@ -28,7 +27,7 @@ function NovaLib:CreateWindow(Settings)
 	local listfiles = listfiles or (function() return {} end)
 	local delfile = delfile or (function() end)
 	local appendfile = appendfile or (function() end)
-	
+
 	local ConfigFolder = "NovaLibraryFolder"
 	if not isfolder(ConfigFolder) then
 		makefolder(ConfigFolder)
@@ -52,7 +51,7 @@ function NovaLib:CreateWindow(Settings)
 	local mainFrameHolderUIScale = Instance.new("UIScale")
 	mainFrameHolderUIScale.Scale = 1
 	mainFrameHolderUIScale.Parent = mainFrameHolder
-	
+
 	UserInputService.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.Keyboard then
 			if input.KeyCode == minimizeKey then
@@ -61,7 +60,7 @@ function NovaLib:CreateWindow(Settings)
 			end
 		end
 	end)
-	
+
 	local mainFrameHolderUICorner = Instance.new("UICorner")
 	mainFrameHolderUICorner.CornerRadius = UDim.new(0,32)
 	mainFrameHolderUICorner.Parent = mainFrameHolder
@@ -110,7 +109,7 @@ function NovaLib:CreateWindow(Settings)
 	title.TextColor3 = Color3.fromRGB(255,255,255)
 	title.TextSize = 18
 	title.TextXAlignment = Enum.TextXAlignment.Left
-	
+
 	local libraryCloseFrameHolder = Instance.new("Frame")
 	libraryCloseFrameHolder.Name = "libraryCloseFrameHolder"
 	libraryCloseFrameHolder.Parent = mainFrameHolder
@@ -286,7 +285,7 @@ function NovaLib:CreateWindow(Settings)
 	maximizeButton.Position = UDim2.new(0.88,0,0.16,0)
 	maximizeButton.Size = UDim2.new(0,25,0,25)
 	maximizeButton.Image = "rbxassetid://112544679223166"
-	
+
 	maximizeButton.MouseButton1Click:Connect(function()
 		if expanded then
 			TweenService:Create(mainFrameHolderUIScale, TweenInfo.new(0.5), {Scale = 1}):Play()
@@ -303,7 +302,7 @@ function NovaLib:CreateWindow(Settings)
 	minimizeButton.Position = UDim2.new(0.8218,0,0.12,0)
 	minimizeButton.Size = UDim2.new(0,30,0,30)
 	minimizeButton.Image = "rbxassetid://122469386482081"
-	
+
 	minimizeButton.MouseButton1Click:Connect(function()
 		mainFrameHolder.Visible = false
 	end)
@@ -321,7 +320,7 @@ function NovaLib:CreateWindow(Settings)
 	Hide.Position = UDim2.new(0,0,0,39)
 	Hide.Size = UDim2.new(1,0,0,16)
 	Hide.ZIndex = 2
-	
+
 	local notificationFrameHolder = Instance.new("Frame")
 	notificationFrameHolder.Name = "notificationFrameHolder"
 	notificationFrameHolder.Parent = mainFrameHolder
@@ -356,7 +355,7 @@ function NovaLib:CreateWindow(Settings)
 	tabsContainer.Size = UDim2.new(0,198,0,430)
 	tabsContainer.ScrollBarThickness = 0
 	tabsContainer.ScrollBarImageTransparency = 1
-	
+
 	local tabsContainerUIPadding = Instance.new("UIPadding")
 	tabsContainerUIPadding.Parent = tabsContainer
 	tabsContainerUIPadding.PaddingLeft = UDim.new(0, 15)
@@ -366,7 +365,7 @@ function NovaLib:CreateWindow(Settings)
 	tabsContainerUIListLayout.Parent = tabsContainer
 	tabsContainerUIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	tabsContainerUIListLayout.Padding = UDim.new(0,4)
-	
+
 	local featuresHolder = Instance.new("Frame")
 	featuresHolder.Name = "featuresHolder"
 	featuresHolder.Parent = mainFrame
@@ -408,7 +407,7 @@ function NovaLib:CreateWindow(Settings)
 	end)
 
 	RunService.Heartbeat:Connect(update)
-	
+
 	local function CreateNotification(Name, Content, Timer)
 
 		local notificationFrame = Instance.new("Frame")
@@ -419,7 +418,7 @@ function NovaLib:CreateWindow(Settings)
 		notificationFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
 		notificationFrame.BorderSizePixel = 0
 		notificationFrame.Size = UDim2.new(0, 250, 0, 151)
-		
+
 		local tweenInfo = TweenInfo.new(0.5)
 		TweenService:Create(notificationFrame,tweenInfo,{BackgroundTransparency = 0.4}):Play()
 
@@ -462,19 +461,19 @@ function NovaLib:CreateWindow(Settings)
 		notificationFramecontentUIPadding_.Parent = notificationFramecontent
 		notificationFramecontentUIPadding_.PaddingBottom = UDim.new(0, 100)
 		notificationFramecontentUIPadding_.PaddingLeft = UDim.new(0, 4)
-		
+
 		wait(Timer)
 		notificationFrame:Destroy()
 	end
 
 	Window.Gui = ScreenGui
-	
+
 	function Window:CreateTab(TabSettings)
 		local Tab = {}
 		Tab.Window = self
 		local Title = TabSettings.Title or ""
 		local Icon = TabSettings.Icon or ""
-		
+
 		local featuresContainer = Instance.new("ScrollingFrame")
 		featuresContainer.Name = "featuresContainer"
 		featuresContainer.Parent = featuresHolder
@@ -487,14 +486,14 @@ function NovaLib:CreateWindow(Settings)
 		featuresContainer.Size = UDim2.new(0, 363, 0, 430)
 		featuresContainer.ScrollBarThickness = 3
 		featuresContainer.Visible = false
-		
+
 		Tab.featuresContainer = featuresContainer
 
 		local featuresContainerUIListLayout = Instance.new("UIListLayout")
 		featuresContainerUIListLayout.Parent = featuresContainer
 		featuresContainerUIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 		featuresContainerUIListLayout.Padding = UDim.new(0, 6)
-		
+
 		local featuresContainerUIPadding = Instance.new("UIPadding")
 		featuresContainerUIPadding.Parent = featuresContainer
 		featuresContainerUIPadding.PaddingTop = UDim.new(0, 20)
@@ -524,7 +523,7 @@ function NovaLib:CreateWindow(Settings)
 		tabButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 		tabButton.TextSize = 16
 		tabButton.TextXAlignment = Enum.TextXAlignment.Left
-		
+
 		tabButton.MouseButton1Click:Connect(function()
 			for _,v in pairs(featuresHolder:GetChildren()) do
 				if v:IsA("ScrollingFrame") then
@@ -556,7 +555,7 @@ function NovaLib:CreateWindow(Settings)
 		local tabIconUICorner = Instance.new("UICorner")
 		tabIconUICorner.CornerRadius = UDim.new(0, 4)
 		tabIconUICorner.Parent = tabIcon
-		
+
 		function Tab:CreateConfigNameButton()
 			if self._configNameCreated then return end
 			self._configNameCreated = true
@@ -625,10 +624,10 @@ function NovaLib:CreateWindow(Settings)
 				end
 			end)
 
-			self.Window._controls = self.Window._controls or {}
+			self._controls = self._controls or {}
 			self._configNameBox = configNameTextBox
 		end
-		
+
 		function Tab:CreateConfigList()
 			if self._configListCreated then return end
 			self._configListCreated = true
@@ -716,31 +715,40 @@ function NovaLib:CreateWindow(Settings)
 
 			local configOptionsHolderUIListLayout = Instance.new("UIListLayout")
 			configOptionsHolderUIListLayout.Parent = configOptionsHolder
+			configOptionsHolderUIListLayout.Padding = UDim.new(0,2)
+
+			local function resizeDropdown()
+				configOptionsHolder.Size = UDim2.new(0,134,0,#self._configs * 30)
+			end
+
+			local function createOption(name)
+				table.insert(self._configs,name)
+
+				local option = Instance.new("TextButton")
+				option.Parent = configOptionsHolder
+				option.BackgroundTransparency = 1
+				option.Size = UDim2.new(1,0,0,30)
+				option.Font = Enum.Font.Ubuntu
+				option.RichText = true
+				option.Text = "<b>"..name.."</b>"
+				option.TextColor3 = Color3.fromRGB(255,255,255)
+				option.TextSize = 14
+				option.ZIndex = 21
+
+				option.MouseButton1Click:Connect(function()
+					configOptionButton.Text = name
+					configOptionsHolder.Visible = false
+				end)
+
+				resizeDropdown()
+			end
 
 			for _,file in pairs(listfiles(ConfigFolder)) do
 				local name = file:match("([^/\\]+)%.json$")
 				if name then
-					table.insert(self._configs,name)
-
-					local option = Instance.new("TextButton")
-					option.Parent = configOptionsHolder
-					option.BackgroundTransparency = 1
-					option.Size = UDim2.new(1,0,0,30)
-					option.Font = Enum.Font.Ubuntu
-					option.RichText = true
-					option.Text = "<b>"..name.."</b>"
-					option.TextColor3 = Color3.fromRGB(255,255,255)
-					option.TextSize = 14
-					option.ZIndex = 21
-
-					option.MouseButton1Click:Connect(function()
-						configOptionButton.Text = name
-						configOptionsHolder.Visible = false
-					end)
+					createOption(name)
 				end
 			end
-
-			self._configOptionsHolder.Size = UDim2.new(0,134,0,#self._configs*30)
 
 			configOptionButton.MouseButton1Click:Connect(function()
 				configOptionsHolder.Visible = not configOptionsHolder.Visible
@@ -749,7 +757,7 @@ function NovaLib:CreateWindow(Settings)
 			self._configOptionButton = configOptionButton
 			self._configOptionsHolder = configOptionsHolder
 		end
-		
+
 		function Tab:CreateSaveConfigButton()
 			if self._saveConfigCreated then return end
 			self._saveConfigCreated = true
@@ -796,7 +804,7 @@ function NovaLib:CreateWindow(Settings)
 
 				local data = {}
 
-				for _,control in pairs(self.Window._controls) do
+				for _,control in pairs(self._controls) do
 					if control.Type == "Toggle" then
 						data[control.Title] = control.Object:GetValue()
 					elseif control.Type == "Slider" then
@@ -830,12 +838,11 @@ function NovaLib:CreateWindow(Settings)
 						self._configOptionsHolder.Visible = false
 					end)
 
-					local visibleCount = math.min(#self._configs,3)
-					self._configOptionsHolder.Size = UDim2.new(0,134,0,visibleCount*30)
+					self._configOptionsHolder.Size = UDim2.new(0,134,0,#self._configs*30)
 				end
 			end)
 		end
-		
+
 		function Tab:CreateloadConfigButton()
 			local loadConfigButton = Instance.new("Frame")
 			loadConfigButton.Name = "loadConfigButton"
@@ -875,13 +882,13 @@ function NovaLib:CreateWindow(Settings)
 			loadConfigButtonButton.ImageTransparency = 1
 
 			loadConfigButtonButton.MouseButton1Click:Connect(function()
-				local name = self._configOptionButton.Text
+				local name = self._configOptionButton.Text:gsub("<.->","")
 				local path = ConfigFolder.."/"..name..".json"
 				if not isfile(path) then return end
 
 				local data = HttpService:JSONDecode(readfile(path))
 
-				for _,control in pairs(self.Window._controls) do
+				for _,control in pairs(self._controls) do
 					local value = data[control.Title]
 					if value ~= nil then
 						if control.Type == "Toggle" then
@@ -897,7 +904,7 @@ function NovaLib:CreateWindow(Settings)
 				end
 			end)
 		end
-		
+
 		function Tab:CreateTextSeparator(Text)
 			local TextSeparator = {}
 			local textSeparatorHolder = Instance.new("Frame")
@@ -931,10 +938,10 @@ function NovaLib:CreateWindow(Settings)
 			local textSeparatorHoldertitleUIPadding = Instance.new("UIPadding")
 			textSeparatorHoldertitleUIPadding.Parent = textSeparatorHoldertitle
 			textSeparatorHoldertitleUIPadding.PaddingLeft = UDim.new(0, 6)
-			
+
 			return TextSeparator
 		end
-		
+
 		function Tab:CreateLabel(Text)
 			local Label = {}
 			local labelHolder = Instance.new("Frame")
@@ -946,10 +953,10 @@ function NovaLib:CreateWindow(Settings)
 			labelHolder.BorderSizePixel = 0
 			labelHolder.Position = UDim2.new(-0.0210843366, 0, 0.21121718, 0)
 			labelHolder.Size = UDim2.new(0, 300, 0, 50)
-			
+
 			local labelHolderUICorner = Instance.new("UICorner")
 			labelHolderUICorner.Parent = labelHolder
-			
+
 			local labelHoldertitle = Instance.new("TextLabel")
 			labelHoldertitle.Name = "title"
 			labelHoldertitle.Parent = labelHolder
@@ -964,19 +971,19 @@ function NovaLib:CreateWindow(Settings)
 			labelHoldertitle.TextColor3 = Color3.fromRGB(255, 255, 255)
 			labelHoldertitle.TextSize = 16.000
 			labelHoldertitle.TextXAlignment = Enum.TextXAlignment.Left
-			
+
 			local labelHoldertitleUIPadding = Instance.new("UIPadding")
 			labelHoldertitleUIPadding.Parent = labelHoldertitle
 			labelHoldertitleUIPadding.PaddingLeft = UDim.new(0, 15)
-			
+
 			return Label
 		end
-		
+
 		function Tab:CreateParagraph(Settings)
 			local Paragraph = {}
 			local Text = Settings.Text or ""
 			local Content = Settings.Content or ""
-			
+
 			local paragraphHolder = Instance.new("Frame")
 			paragraphHolder.Name = "paragraphHolder"
 			paragraphHolder.Parent = featuresContainer
@@ -986,10 +993,10 @@ function NovaLib:CreateWindow(Settings)
 			paragraphHolder.BorderSizePixel = 0
 			paragraphHolder.Position = UDim2.new(0, 0, 0.352028638, 0)
 			paragraphHolder.Size = UDim2.new(0, 300, 0, 80)
-			
+
 			local paragraphHolderUICorner = Instance.new("UICorner")
 			paragraphHolderUICorner.Parent = paragraphHolder
-			
+
 			local paragraphHoldertitle = Instance.new("TextLabel")
 			paragraphHoldertitle.Name = "title"
 			paragraphHoldertitle.Parent = paragraphHolder
@@ -1004,11 +1011,11 @@ function NovaLib:CreateWindow(Settings)
 			paragraphHoldertitle.TextColor3 = Color3.fromRGB(255, 255, 255)
 			paragraphHoldertitle.TextSize = 16.000
 			paragraphHoldertitle.TextXAlignment = Enum.TextXAlignment.Left
-			
+
 			local paragraphHoldertitleUIPadding = Instance.new("UIPadding")
 			paragraphHoldertitleUIPadding.Parent = paragraphHoldertitle
 			paragraphHoldertitleUIPadding.PaddingLeft = UDim.new(0, 15)
-			
+
 			local content = Instance.new("TextLabel")
 			content.Name = "content"
 			content.Parent = paragraphHolder
@@ -1032,10 +1039,10 @@ function NovaLib:CreateWindow(Settings)
 			contentUIPadding.PaddingBottom = UDim.new(0,10)
 
 			paragraphHolder.AutomaticSize = Enum.AutomaticSize.Y
-			
+
 			return Paragraph
 		end
-		
+
 		function Tab:CreateButton(Settings)
 			local Button = {}
 			local Title = Settings.Title or "Button"
@@ -1108,7 +1115,7 @@ function NovaLib:CreateWindow(Settings)
 
 			return Button
 		end
-		
+
 		function Tab:CreateToggle(Settings)
 			local Toggle = {}
 			local Title = Settings.Title or ""
@@ -1185,7 +1192,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self.Window._controls,{
+			table.insert(self._controls,{
 				Type = "Toggle",
 				Title = Title,
 				Object = Toggle
@@ -1193,7 +1200,7 @@ function NovaLib:CreateWindow(Settings)
 
 			return Toggle
 		end
-		
+
 		function Tab:CreateTextbox(Settings)
 			local Textbox = {}
 			local Title = Settings.Title or ""
@@ -1264,7 +1271,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self.Window._controls,{
+			table.insert(self._controls,{
 				Type = "Textbox",
 				Title = Title,
 				Object = Textbox
@@ -1272,7 +1279,7 @@ function NovaLib:CreateWindow(Settings)
 
 			return Textbox
 		end
-		
+
 		function Tab:CreateSlider(Settings)
 			local Slider = {}
 			local Title = Settings.Title or ""
@@ -1374,7 +1381,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self.Window._controls,{
+			table.insert(self._controls,{
 				Type = "Slider",
 				Title = Title,
 				Object = Slider
@@ -1382,7 +1389,7 @@ function NovaLib:CreateWindow(Settings)
 
 			return Slider
 		end
-		
+
 		function Tab:CreateInput(Settings)
 			local Input = {}
 			local Title = Settings.Title or ""
@@ -1478,7 +1485,7 @@ function NovaLib:CreateWindow(Settings)
 
 			return Input
 		end
-		
+
 		function Tab:CreateDropdown(Settings)
 			local Dropdown = {}
 			local Title = Settings.Title or ""
@@ -1670,7 +1677,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self.Window._controls,{
+			table.insert(self._controls,{
 				Type = "Dropdown",
 				Title = Title,
 				Object = Dropdown
