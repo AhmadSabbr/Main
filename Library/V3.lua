@@ -355,6 +355,7 @@ function NovaLib:CreateWindow(Settings)
 	tabsContainer.Size = UDim2.new(0,198,0,430)
 	tabsContainer.ScrollBarThickness = 0
 	tabsContainer.ScrollBarImageTransparency = 1
+	tabsContainer.AutomaticCanvasSize = Enum.AutomaticSize.Y
 
 	local tabsContainerUIPadding = Instance.new("UIPadding")
 	tabsContainerUIPadding.Parent = tabsContainer
