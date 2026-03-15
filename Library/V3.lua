@@ -620,7 +620,7 @@ function NovaLib:CreateWindow(Settings)
 
 			configNameTextBox.FocusLost:Connect(function()
 				if configNameTextBox.Text == "" then
-					configNameTextBox.Text = "<b>...</b>"
+					configNameTextBox.Text = "..."
 				end
 			end)
 
@@ -1244,7 +1244,13 @@ function NovaLib:CreateWindow(Settings)
 			TextBox.Text = "..."
 			TextBox.TextColor3 = Color3.fromRGB(255,255,255)
 			TextBox.TextSize = 12
-			TextBox.ClearTextOnFocus = false
+			TextBox.ClearTextOnFocus = true
+
+			TextBox.FocusLost:Connect(function()
+				if TextBox.Text == "" then
+					TextBox.Text = "..."
+				end
+			end)
 
 			local TextBoxUIStroke = Instance.new("UIStroke")
 			TextBoxUIStroke.Parent = TextBox
