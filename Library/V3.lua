@@ -493,13 +493,20 @@ end
 	local confirmOption = Instance.new("TextButton")
 	confirmOption.Parent = optionsHolder
 	confirmOption.BackgroundTransparency = 1
-	confirmOption.Position = UDim2.new(0.096, 0, 0.21, 0)
-	confirmOption.Size = UDim2.new(0, 110, 0, 40)
+	confirmOption.Position = UDim2.new(0.098,0,0.141,0)
+	confirmOption.Size = UDim2.new(0,110,0,50)
 	confirmOption.Font = Enum.Font.Arimo
 	confirmOption.RichText = true
 	confirmOption.Text = "<b>Confirm</b>"
 	confirmOption.TextColor3 = Color3.fromRGB(255,255,255)
 	confirmOption.TextSize = 14
+
+	local confirmOptionUIStroke = Instance.new("UIStroke")
+	confirmOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	confirmOptionUIStroke.Parent = confirmOption
+	confirmOptionUIStroke.Color = Color3.fromRGB(94,51,153)
+	confirmOptionUIStroke.Thickness = 1.5
+	confirmOptionUIStroke.Transparency = 1
 
 	local confirmCorner = Instance.new("UICorner", confirmOption)
 	confirmCorner.CornerRadius = UDim.new(0,4)
@@ -507,13 +514,20 @@ end
 	local cancelOption = Instance.new("TextButton")
 	cancelOption.Parent = optionsHolder
 	cancelOption.BackgroundTransparency = 1
-	cancelOption.Position = UDim2.new(0.523, 0, 0.24, 0)
-	cancelOption.Size = UDim2.new(0, 110, 0, 36)
+	cancelOption.Position = UDim2.new(0.525,0,0.141,0)
+	cancelOption.Size = UDim2.new(0,110,0,50)
 	cancelOption.Font = Enum.Font.Arimo
 	cancelOption.RichText = true
 	cancelOption.Text = "<b>Cancel</b>"
 	cancelOption.TextColor3 = Color3.fromRGB(255,255,255)
 	cancelOption.TextSize = 14
+
+	local cancelOptionUIStroke = Instance.new("UIStroke")
+	cancelOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	cancelOptionUIStroke.Parent = cancelOption
+	cancelOptionUIStroke.Color = Color3.fromRGB(94,51,153)
+	cancelOptionUIStroke.Thickness = 1.5
+	cancelOptionUIStroke.Transparency = 1
 
 	local cancelCorner = Instance.new("UICorner", cancelOption)
 	cancelCorner.CornerRadius = UDim.new(0,4)
