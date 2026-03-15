@@ -474,15 +474,12 @@ end
 	dialogFrame.Position = UDim2.new(0.240386546, 0, 0.335849047, 0)
 	dialogFrame.Size = UDim2.new(0, 300, 0, 200)
 
-	local tweenInfo = TweenInfo.new(0.5)
-	TweenService:Create(dialogFrame, tweenInfo, {BackgroundTransparency = 0.1}):Play()
-
 	local corner = Instance.new("UICorner", dialogFrame)
 
 	local optionsHolder = Instance.new("Frame")
 	optionsHolder.Parent = dialogFrame
 	optionsHolder.BackgroundColor3 = Color3.fromRGB(48, 19, 99)
-	optionsHolder.BackgroundTransparency = 0.4
+	optionsHolder.BackgroundTransparency = 1
 	optionsHolder.BorderSizePixel = 0
 	optionsHolder.Position = UDim2.new(0, 0, 0.643286765, 0)
 	optionsHolder.Size = UDim2.new(0, 300, 0, 71)
@@ -500,6 +497,7 @@ end
 	confirmOption.Text = "<b>Confirm</b>"
 	confirmOption.TextColor3 = Color3.fromRGB(255,255,255)
 	confirmOption.TextSize = 14
+	confirmOption.TextTransparency = 1
 
 	local confirmOptionUIStroke = Instance.new("UIStroke")
 	confirmOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -521,6 +519,7 @@ end
 	cancelOption.Text = "<b>Cancel</b>"
 	cancelOption.TextColor3 = Color3.fromRGB(255,255,255)
 	cancelOption.TextSize = 14
+	cancelOption.TextTransparency = 1
 
 	local cancelOptionUIStroke = Instance.new("UIStroke")
 	cancelOptionUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -543,6 +542,7 @@ end
 	titleLabel.TextColor3 = Color3.fromRGB(255,255,255)
 	titleLabel.TextSize = 18
 	titleLabel.TextXAlignment = Enum.TextXAlignment.Left
+	titleLabel.TextTransparency = 1
 
 	local dialogLabel = Instance.new("TextLabel")
 	dialogLabel.Parent = dialogFrame
@@ -554,13 +554,21 @@ end
 	dialogLabel.Text = "<b>"..Dialog.."</b>"
 	dialogLabel.TextColor3 = Color3.fromRGB(255,255,255)
 	dialogLabel.TextSize = 14
-	dialogLabel.TextTransparency = 0.2
+	dialogLabel.TextTransparency = 1
 	dialogLabel.TextXAlignment = Enum.TextXAlignment.Left
 
+	local tweenInfo = TweenInfo.new(0.5)
+	TweenService:Create(dialogFrame, tweenInfo, {BackgroundTransparency = 0.1}):Play()
+	TweenService:Create(optionsHolder, tweenInfo, {BackgroundTransparency = 0.4}):Play()
+	TweenService:Create(titleLabel, tweenInfo, {TextTransparency = 0}):Play()
+	TweenService:Create(dialogLabel, tweenInfo, {TextTransparency = 0}):Play()
+	TweenService:Create(confirmOption, tweenInfo, {TextTransparency = 0}):Play()
+	TweenService:Create(cancelOption, tweenInfo, {TextTransparency = 0}):Play()
+	TweenService:Create(confirmOptionUIStroke, tweenInfo, {Transparency = 0}):Play()
+	TweenService:Create(cancelOptionUIStroke, tweenInfo, {Transparency = 0}):Play()
+
 	confirmOption.MouseButton1Click:Connect(function()
-		if YesCallback then
-			YesCallback()
-		end
+		if YesCallback then YesCallback() end
 		dialogFrame:Destroy()
 	end)
 
