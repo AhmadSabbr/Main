@@ -877,7 +877,7 @@ function NovaLib:CreateWindow(Settings)
 			loadConfigButtonButton.ImageTransparency = 1
 
 			loadConfigButtonButton.MouseButton1Click:Connect(function()
-				local name = self._configOptionButton.Text:gsub("<.->","")
+				local name = self._configOptionButton.Text
 				local path = ConfigFolder.."/"..name..".json"
 				if not isfile(path) then return end
 
