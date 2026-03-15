@@ -1,3 +1,4 @@
+local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
@@ -32,8 +33,6 @@ function NovaLib:CreateWindow(Settings)
 		makefolder(ConfigFolder)
 	end
 	
-	local CoreGui = game:GetService("CoreGui")
-
 	local ScreenGui = Instance.new("ScreenGui")
 	ScreenGui.Name = "Library"
 	ScreenGui.Parent = CoreGui
