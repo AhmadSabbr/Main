@@ -17,15 +17,15 @@ function NovaLib:CreateWindow(Settings)
 	local minimizeKey = Settings.MinimizeKey
 	local minimized = false
 	local expanded = false
-
+	
 	local writefile = writefile or (function() end)
-    local readfile = readfile or (function() return "" end)
-    local isfile = isfile or (function() return false end)
-    local isfolder = isfolder or (function() return false end)
-    local makefolder = makefolder or (function() end)
-    local listfiles = listfiles or (function() return {} end)
-    local delfile = delfile or (function() end)
-    local appendfile = appendfile or (function() end)
+	local readfile = readfile or (function() return "" end)
+	local isfile = isfile or (function() return false end)
+	local isfolder = isfolder or (function() return false end)
+	local makefolder = makefolder or (function() end)
+	local listfiles = listfiles or (function() return {} end)
+	local delfile = delfile or (function() end)
+	local appendfile = appendfile or (function() end)
 	
 	local ConfigFolder = "NovaLibraryFolder"
 	if not isfolder(ConfigFolder) then
@@ -1111,89 +1111,89 @@ function NovaLib:CreateWindow(Settings)
 		end
 		
 		function Tab:CreateToggle(Settings)
-	local Toggle = {}
-	local Title = Settings.Title or ""
-	local State = Settings.State or false
-	local Callback = Settings.Callback or function() end
+			local Toggle = {}
+			local Title = Settings.Title or ""
+			local State = Settings.State or false
+			local Callback = Settings.Callback or function() end
 
-	local toggleHolder = Instance.new("Frame")
-	toggleHolder.Name = "toggleHolder"
-	toggleHolder.Parent = self.featuresContainer
-	toggleHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
-	toggleHolder.BackgroundTransparency = 0.75
-	toggleHolder.BorderSizePixel = 0
-	toggleHolder.Size = UDim2.new(0,300,0,50)
+			local toggleHolder = Instance.new("Frame")
+			toggleHolder.Name = "toggleHolder"
+			toggleHolder.Parent = self.featuresContainer
+			toggleHolder.BackgroundColor3 = Color3.fromRGB(86,8,125)
+			toggleHolder.BackgroundTransparency = 0.75
+			toggleHolder.BorderSizePixel = 0
+			toggleHolder.Size = UDim2.new(0,300,0,50)
 
-	local toggleHolderUICorner = Instance.new("UICorner")
-	toggleHolderUICorner.Parent = toggleHolder
+			local toggleHolderUICorner = Instance.new("UICorner")
+			toggleHolderUICorner.Parent = toggleHolder
 
-	local toggleHoldertitle = Instance.new("TextLabel")
-	toggleHoldertitle.Name = "title"
-	toggleHoldertitle.Parent = toggleHolder
-	toggleHoldertitle.BackgroundTransparency = 1
-	toggleHoldertitle.BorderSizePixel = 0
-	toggleHoldertitle.Size = UDim2.new(0,130,0,50)
-	toggleHoldertitle.Font = Enum.Font.Arimo
-	toggleHoldertitle.RichText = true
-	toggleHoldertitle.Text = "<b>" .. Title .. "</b>"
-	toggleHoldertitle.TextColor3 = Color3.fromRGB(255,255,255)
-	toggleHoldertitle.TextSize = 16
-	toggleHoldertitle.TextXAlignment = Enum.TextXAlignment.Left
+			local toggleHoldertitle = Instance.new("TextLabel")
+			toggleHoldertitle.Name = "title"
+			toggleHoldertitle.Parent = toggleHolder
+			toggleHoldertitle.BackgroundTransparency = 1
+			toggleHoldertitle.BorderSizePixel = 0
+			toggleHoldertitle.Size = UDim2.new(0,130,0,50)
+			toggleHoldertitle.Font = Enum.Font.Arimo
+			toggleHoldertitle.RichText = true
+			toggleHoldertitle.Text = "<b>" .. Title .. "</b>"
+			toggleHoldertitle.TextColor3 = Color3.fromRGB(255,255,255)
+			toggleHoldertitle.TextSize = 16
+			toggleHoldertitle.TextXAlignment = Enum.TextXAlignment.Left
 
-	local toggleHoldertitleUIPadding = Instance.new("UIPadding")
-	toggleHoldertitleUIPadding.Parent = toggleHoldertitle
-	toggleHoldertitleUIPadding.PaddingLeft = UDim.new(0,15)
+			local toggleHoldertitleUIPadding = Instance.new("UIPadding")
+			toggleHoldertitleUIPadding.Parent = toggleHoldertitle
+			toggleHoldertitleUIPadding.PaddingLeft = UDim.new(0,15)
 
-	local stateBox = Instance.new("ImageButton")
-	stateBox.Name = "stateBox"
-	stateBox.Parent = toggleHolder
-	stateBox.BackgroundColor3 = Color3.fromRGB(230,230,230)
-	stateBox.BackgroundTransparency = 0.8
-	stateBox.BorderSizePixel = 0
-	stateBox.Position = UDim2.new(0.816666663,0,0.2,0)
-	stateBox.Size = UDim2.new(0,30,0,30)
-	stateBox.ImageTransparency = 1
-
-	local stateBoxUICorner = Instance.new("UICorner")
-	stateBoxUICorner.Parent = stateBox
-
-	local function Update()
-		if State then
-			stateBox.BackgroundColor3 = Color3.fromRGB(204,98,193)
-			stateBox.BackgroundTransparency = 0
-		else
+			local stateBox = Instance.new("ImageButton")
+			stateBox.Name = "stateBox"
+			stateBox.Parent = toggleHolder
 			stateBox.BackgroundColor3 = Color3.fromRGB(230,230,230)
 			stateBox.BackgroundTransparency = 0.8
+			stateBox.BorderSizePixel = 0
+			stateBox.Position = UDim2.new(0.816666663,0,0.2,0)
+			stateBox.Size = UDim2.new(0,30,0,30)
+			stateBox.ImageTransparency = 1
+
+			local stateBoxUICorner = Instance.new("UICorner")
+			stateBoxUICorner.Parent = stateBox
+
+			local function Update()
+				if State then
+					stateBox.BackgroundColor3 = Color3.fromRGB(204,98,193)
+					stateBox.BackgroundTransparency = 0
+				else
+					stateBox.BackgroundColor3 = Color3.fromRGB(230,230,230)
+					stateBox.BackgroundTransparency = 0.8
+				end
+				Callback(State)
+			end
+
+			stateBox.MouseButton1Click:Connect(function()
+				State = not State
+				Update()
+			end)
+
+			function Toggle:SetValue(Value)
+				State = Value
+				Update()
+			end
+
+			function Toggle:GetValue()
+				return State
+			end
+
+			Update()
+
+			self._controls = self._controls or {}
+
+			table.insert(self._controls,{
+				Type = "Toggle",
+				Title = Title,
+				Object = Toggle
+			})
+
+			return Toggle
 		end
-		Callback(State)
-	end
-
-	stateBox.MouseButton1Click:Connect(function()
-		State = not State
-		Update()
-	end)
-
-	function Toggle:SetValue(Value)
-		State = Value
-		Update()
-	end
-
-	function Toggle:GetValue()
-		return State
-	end
-
-	Update()
-
-	self._controls = self._controls or {}
-
-	table.insert(self._controls,{
-		Type = "Toggle",
-		Title = Title,
-		Object = Toggle
-	})
-
-	return Toggle
-end
 		
 		function Tab:CreateTextbox(Settings)
 			local Textbox = {}
