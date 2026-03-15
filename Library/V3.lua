@@ -17,6 +17,15 @@ function NovaLib:CreateWindow(Settings)
 	local minimizeKey = Settings.MinimizeKey
 	local minimized = false
 	local expanded = false
+
+	local writefile = writefile or (function() end)
+    local readfile = readfile or (function() return "" end)
+    local isfile = isfile or (function() return false end)
+    local isfolder = isfolder or (function() return false end)
+    local makefolder = makefolder or (function() end)
+    local listfiles = listfiles or (function() return {} end)
+    local delfile = delfile or (function() end)
+    local appendfile = appendfile or (function() end)
 	
 	local ConfigFolder = "NovaLibraryFolder"
 	if not isfolder(ConfigFolder) then
