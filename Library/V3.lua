@@ -470,6 +470,7 @@ function NovaLib:CreateWindow(Settings)
 	
 	function Window:CreateTab(TabSettings)
 		local Tab = {}
+		Tab.Window = self
 		local Title = TabSettings.Title or ""
 		local Icon = TabSettings.Icon or ""
 		
