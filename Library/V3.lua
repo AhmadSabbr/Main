@@ -624,7 +624,7 @@ function NovaLib:CreateWindow(Settings)
 				end
 			end)
 
-			self._controls = self._controls or {}
+			self.Window._controls = self.Window._controls or {}
 			self._configNameBox = configNameTextBox
 		end
 
@@ -804,7 +804,7 @@ function NovaLib:CreateWindow(Settings)
 
 				local data = {}
 
-				for _,control in pairs(self._controls) do
+				for _,control in pairs(self.Window._controls) do
 					if control.Type == "Toggle" then
 						data[control.Title] = control.Object:GetValue()
 					elseif control.Type == "Slider" then
@@ -888,7 +888,7 @@ function NovaLib:CreateWindow(Settings)
 
 				local data = HttpService:JSONDecode(readfile(path))
 
-				for _,control in pairs(self._controls) do
+				for _,control in pairs(self.Window._controls) do
 					local value = data[control.Title]
 					if value ~= nil then
 						if control.Type == "Toggle" then
@@ -1192,7 +1192,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self._controls,{
+			table.insert(self.Window._controls,{
 				Type = "Toggle",
 				Title = Title,
 				Object = Toggle
@@ -1271,7 +1271,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self._controls,{
+			table.insert(self.Window._controls,{
 				Type = "Textbox",
 				Title = Title,
 				Object = Textbox
@@ -1381,7 +1381,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self._controls,{
+			table.insert(self.Window._controls,{
 				Type = "Slider",
 				Title = Title,
 				Object = Slider
@@ -1677,7 +1677,7 @@ function NovaLib:CreateWindow(Settings)
 
 			self.Window._controls = self.Window._controls or {}
 
-			table.insert(self._controls,{
+			table.insert(self.Window._controls,{
 				Type = "Dropdown",
 				Title = Title,
 				Object = Dropdown
