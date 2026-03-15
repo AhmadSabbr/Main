@@ -603,7 +603,7 @@ function NovaLib:CreateWindow(Settings)
 			configNameTextBox.Size = UDim2.new(0,120,0,35)
 			configNameTextBox.Font = Enum.Font.Arimo
 			configNameTextBox.RichText = false
-			configNameTextBox.Text = ""
+			configNameTextBox.Text = "..."
 			configNameTextBox.TextColor3 = Color3.fromRGB(255,255,255)
 			configNameTextBox.TextSize = 12
 			configNameTextBox.ClipsDescendants = true
@@ -1241,7 +1241,7 @@ function NovaLib:CreateWindow(Settings)
 			TextBox.Position = UDim2.new(0.456666678,0,0.14,0)
 			TextBox.Size = UDim2.new(0,150,0,35)
 			TextBox.Font = Enum.Font.Arimo
-			TextBox.Text = ""
+			TextBox.Text = "..."
 			TextBox.TextColor3 = Color3.fromRGB(255,255,255)
 			TextBox.TextSize = 12
 			TextBox.ClearTextOnFocus = false
