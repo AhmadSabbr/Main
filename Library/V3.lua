@@ -1183,7 +1183,7 @@ function NovaLib:CreateWindow(Settings)
 
 			Update()
 
-			self._controls = self._controls or {}
+			self.Window._controls = self.Window._controls or {}
 
 			table.insert(self._controls,{
 				Type = "Toggle",
@@ -1262,7 +1262,7 @@ function NovaLib:CreateWindow(Settings)
 				Callback(v)
 			end
 
-			self._controls = self._controls or {}
+			self.Window._controls = self.Window._controls or {}
 
 			table.insert(self._controls,{
 				Type = "Textbox",
@@ -1372,7 +1372,7 @@ function NovaLib:CreateWindow(Settings)
 
 			Update(Value)
 
-			self._controls = self._controls or {}
+			self.Window._controls = self.Window._controls or {}
 
 			table.insert(self._controls,{
 				Type = "Slider",
@@ -1668,7 +1668,7 @@ function NovaLib:CreateWindow(Settings)
 				fire()
 			end
 
-			self._controls = self._controls or {}
+			self.Window._controls = self.Window._controls or {}
 
 			table.insert(self._controls,{
 				Type = "Dropdown",
