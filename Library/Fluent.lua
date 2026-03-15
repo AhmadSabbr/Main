@@ -34,7 +34,7 @@ local Themes = {
 	Names = {
 		"NovaHubX"
 	},
-	SpeedHubX = {
+	NovaHubX = {
 		Name = "NovaHubX",
 	Accent = Color3.fromRGB(255, 0, 0),
 
@@ -84,7 +84,7 @@ local Themes = {
 }
 
 local Library = {
-	Version = "4.0.0",
+	Version = "1.0.0",
 
 	OpenFrames = {},
 	Options = {},
@@ -261,7 +261,7 @@ end
 
 function Linear:step(state, dt)
 	local position = state.value
-	local velocity = self._velocity -- Linear motion ignores the state's velocity
+	local velocity = self._velocit
 	local goal = self._targetValue
 
 	local dPos = dt * velocity
@@ -751,7 +751,7 @@ function Creator.GetThemeProperty(Property)
 	if Themes[Library.Theme][Property] then
 		return Themes[Library.Theme][Property]
 	end
-	return Themes["SpeedHubX"][Property]
+	return Themes["NovaHubX"][Property]
 end
 
 function Creator.New(Name, Properties, Children)
@@ -5556,7 +5556,7 @@ function Library:CreateWindow(Config)
 
 	Library.UseAcrylic = Config.Acrylic or false
 	Library.Acrylic = Config.Acrylic or false
-	Library.Theme = Config.Theme or "SpeedHubX"
+	Library.Theme = Config.Theme or "NovaHubX"
 	if Config.Acrylic then
 		Acrylic.init()
 	end
