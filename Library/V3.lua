@@ -409,7 +409,7 @@ function NovaLib:CreateWindow(Settings)
 
 	RunService.Heartbeat:Connect(update)
 
-	local function CreateNotification(Name, Content, Timer)
+	function CreateNotification(Name, Content, Timer)
 	local notificationFrame = Instance.new("Frame")
 	notificationFrame.Name = "notificationFrame"
 	notificationFrame.Parent = notificationFrameHolder
@@ -464,7 +464,7 @@ function NovaLib:CreateWindow(Settings)
 	end
 end
 
-	local function CreateDialog(Title, Dialog, Timer, YesCallback)
+	function CreateDialog(Title, Dialog, Timer, YesCallback)
 	local dialogFrame = Instance.new("Frame")
 	dialogFrame.Name = "dialogFrame"
 	dialogFrame.Parent = mainFrameHolder
