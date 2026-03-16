@@ -5,7 +5,7 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
 
-local screenGui = CoreGui:FindFirstChild("ScreenGui")
+local screenGui = CoreGui:FindFirstChild("Library")
 if screenGui then
 	screenGui:Destroy()
 end
