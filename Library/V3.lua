@@ -1,11 +1,16 @@
+local screenGui = CoreGui:FindFirstChild("ScreenGui")
+	if screenGui then
+		screenGui:Destroy()
+end
+
+local NovaLib = {}
+
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local TextService = game:GetService("TextService")
 local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 local CoreGui = game:GetService("CoreGui")
-
-local NovaLib = {}
 
 function NovaLib:CreateWindow(Settings)
 	local Title = Settings.Title or ""
