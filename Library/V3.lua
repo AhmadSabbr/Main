@@ -1,6 +1,7 @@
 local screenGui = CoreGui:FindFirstChild("ScreenGui")
-	if screenGui then
-		screenGui:Destroy()
+if screenGui then
+	screenGui:Destroy()
+else
 end
 
 local NovaLib = {}
