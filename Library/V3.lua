@@ -13,13 +13,13 @@ end
 local NovaLib = {}
 function NovaLib:CreateWindow(Settings)
 	local Title = Settings.Title or ""
+	local minimizeKeybind = Settings.MinimizeKeybind
+	local minimizeKey = Settings.MinimizeKey
 	local Window = {}
 	local CurrentTab = nil
 	local dragging = false
 	local startPos, lastMouse
 	local dragSpeed = 100
-	local minimizeKeybind = Settings.MinimizeKeybind
-	local minimizeKey = Settings.MinimizeKey
 	local minimized = false
 	local expanded = false
 
@@ -913,6 +913,14 @@ function NovaLib:CreateWindow(Settings)
 			saveConfigButtontitleUIPadding.Parent = saveConfigButtontitle
 			saveConfigButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
 
+			local saveConfigButtonImageLabel = Instance.new("ImageLabel")
+			saveConfigButtonImageLabel.Parent = saveConfigButton
+			saveConfigButtonImageLabel.BackgroundTransparency = 1
+			saveConfigButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			saveConfigButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			saveConfigButtonImageLabel.Rotation = 90
+			saveConfigButtonImageLabel.Image = "rbxassetid://88806457765010"
+
 			local saveConfigButtonButton = Instance.new("ImageButton")
 			saveConfigButtonButton.Name = "Button"
 			saveConfigButtonButton.Parent = saveConfigButton
@@ -995,6 +1003,14 @@ function NovaLib:CreateWindow(Settings)
 			loadConfigButtontitleUIPadding.Parent = loadConfigButtontitle
 			loadConfigButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
 
+			local loadConfigButtonImageLabel = Instance.new("ImageLabel")
+			loadConfigButtonImageLabel.Parent = loadConfigButton
+			loadConfigButtonImageLabel.BackgroundTransparency = 1
+			loadConfigButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			loadConfigButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			loadConfigButtonImageLabel.Rotation = 90
+			loadConfigButtonImageLabel.Image = "rbxassetid://88806457765010"
+
 			local loadConfigButtonButton = Instance.new("ImageButton")
 			loadConfigButtonButton.Name = "Button"
 			loadConfigButtonButton.Parent = loadConfigButton
@@ -1008,9 +1024,7 @@ function NovaLib:CreateWindow(Settings)
 				local name = self._configOptionButton.Text:gsub("<.->","")
 				local path = ConfigFolder.."/"..name..".json"
 				if not isfile(path) then return end
-
 				local data = HttpService:JSONDecode(readfile(path))
-
 				for _,control in pairs(self.Window._controls) do
 					local value = data[control.Title]
 					if value ~= nil then
@@ -1024,6 +1038,182 @@ function NovaLib:CreateWindow(Settings)
 							control.Object:Set(value)
 						end
 					end
+				end
+			end)
+		end
+
+		function Tab:CreateAutoLoadButton()
+			local autoLoadButton = Instance.new("Frame")
+			autoLoadButton.Name = "autoLoadButton"
+			autoLoadButton.Parent = self.featuresContainer
+			autoLoadButton.BackgroundColor3 = Color3.fromRGB(86,8,125)
+			autoLoadButton.BackgroundTransparency = 0.8
+			autoLoadButton.BorderSizePixel = 0
+			autoLoadButton.Size = UDim2.new(0,300,0,50)
+
+			local autoLoadButtonUICorner = Instance.new("UICorner")
+			autoLoadButtonUICorner.Parent = autoLoadButton
+
+			local autoLoadButtontitle = Instance.new("TextLabel")
+			autoLoadButtontitle.Name = "title"
+			autoLoadButtontitle.Parent = autoLoadButton
+			autoLoadButtontitle.BackgroundTransparency = 1
+			autoLoadButtontitle.Position = UDim2.new(0,0,0.1,0)
+			autoLoadButtontitle.Size = UDim2.new(0,130,0,40)
+			autoLoadButtontitle.Font = Enum.Font.Arimo
+			autoLoadButtontitle.RichText = true
+			autoLoadButtontitle.Text = "<b>Set as Auto Load</b>"
+			autoLoadButtontitle.TextColor3 = Color3.fromRGB(255,255,255)
+			autoLoadButtontitle.TextSize = 14
+			autoLoadButtontitle.TextXAlignment = Enum.TextXAlignment.Left
+
+			local autoLoadButtontitleUIPadding = Instance.new("UIPadding")
+			autoLoadButtontitleUIPadding.Parent = autoLoadButtontitle
+			autoLoadButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
+
+			local autoLoadButtonImageLabel = Instance.new("ImageLabel")
+			autoLoadButtonImageLabel.Parent = autoLoadButton
+			autoLoadButtonImageLabel.BackgroundTransparency = 1
+			autoLoadButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			autoLoadButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			autoLoadButtonImageLabel.Rotation = 90
+			autoLoadButtonImageLabel.Image = "rbxassetid://88806457765010"
+
+			local autoLoadButtonButton = Instance.new("ImageButton")
+			autoLoadButtonButton.Name = "Button"
+			autoLoadButtonButton.Parent = autoLoadButton
+			autoLoadButtonButton.BackgroundTransparency = 1
+			autoLoadButtonButton.BorderSizePixel = 0
+			autoLoadButtonButton.Position = UDim2.new(0,1,0,0)
+			autoLoadButtonButton.Size = UDim2.new(0,298,0,50)
+			autoLoadButtonButton.ImageTransparency = 1
+
+			autoLoadButtonButton.MouseButton1Click:Connect(function()
+				local name = self._configOptionButton.Text:gsub("<.->","")
+				if name == "" or name == "--" then return end
+				writefile(ConfigFolder.."/autoload.txt",name)
+			end)
+		end
+
+		function Tab:CreateResetAutoLoadButton()
+			local resetAutoLoadButton = Instance.new("Frame")
+			resetAutoLoadButton.Name = "resetAutoLoadButton"
+			resetAutoLoadButton.Parent = self.featuresContainer
+			resetAutoLoadButton.BackgroundColor3 = Color3.fromRGB(86,8,125)
+			resetAutoLoadButton.BackgroundTransparency = 0.8
+			resetAutoLoadButton.BorderSizePixel = 0
+			resetAutoLoadButton.Size = UDim2.new(0,300,0,50)
+
+			local resetAutoLoadButtonUICorner = Instance.new("UICorner")
+			resetAutoLoadButtonUICorner.Parent = resetAutoLoadButton
+
+			local resetAutoLoadButtontitle = Instance.new("TextLabel")
+			resetAutoLoadButtontitle.Name = "title"
+			resetAutoLoadButtontitle.Parent = resetAutoLoadButton
+			resetAutoLoadButtontitle.BackgroundTransparency = 1
+			resetAutoLoadButtontitle.Position = UDim2.new(0,0,0.1,0)
+			resetAutoLoadButtontitle.Size = UDim2.new(0,130,0,40)
+			resetAutoLoadButtontitle.Font = Enum.Font.Arimo
+			resetAutoLoadButtontitle.RichText = true
+			resetAutoLoadButtontitle.Text = "<b>Reset Auto Load</b>"
+			resetAutoLoadButtontitle.TextColor3 = Color3.fromRGB(255,255,255)
+			resetAutoLoadButtontitle.TextSize = 14
+			resetAutoLoadButtontitle.TextXAlignment = Enum.TextXAlignment.Left
+
+			local resetAutoLoadButtontitleUIPadding = Instance.new("UIPadding")
+			resetAutoLoadButtontitleUIPadding.Parent = resetAutoLoadButtontitle
+			resetAutoLoadButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
+
+			local resetAutoLoadButtonImageLabel = Instance.new("ImageLabel")
+			resetAutoLoadButtonImageLabel.Parent = resetAutoLoadButton
+			resetAutoLoadButtonImageLabel.BackgroundTransparency = 1
+			resetAutoLoadButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			resetAutoLoadButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			resetAutoLoadButtonImageLabel.Rotation = 90
+			resetAutoLoadButtonImageLabel.Image = "rbxassetid://88806457765010"
+
+			local resetAutoLoadButtonButton = Instance.new("ImageButton")
+			resetAutoLoadButtonButton.Name = "Button"
+			resetAutoLoadButtonButton.Parent = resetAutoLoadButton
+			resetAutoLoadButtonButton.BackgroundTransparency = 1
+			resetAutoLoadButtonButton.BorderSizePixel = 0
+			resetAutoLoadButtonButton.Position = UDim2.new(0,1,0,0)
+			resetAutoLoadButtonButton.Size = UDim2.new(0,298,0,50)
+			resetAutoLoadButtonButton.ImageTransparency = 1
+
+			resetAutoLoadButtonButton.MouseButton1Click:Connect(function()
+				if isfile(ConfigFolder.."/autoload.txt") then
+					writefile(ConfigFolder.."/autoload.txt","")
+				end
+			end)
+		end
+
+		function Tab:CreateResetListButton()
+			if self._resetListCreated then return end
+			self._resetListCreated = true
+
+			local resetListButton = Instance.new("Frame")
+			resetListButton.Name = "resetListButton"
+			resetListButton.Parent = self.featuresContainer
+			resetListButton.BackgroundColor3 = Color3.fromRGB(86,8,125)
+			resetListButton.BackgroundTransparency = 0.8
+			resetListButton.BorderSizePixel = 0
+			resetListButton.Size = UDim2.new(0,300,0,50)
+
+			local resetListButtonUICorner = Instance.new("UICorner")
+			resetListButtonUICorner.Parent = resetListButton
+
+			local resetListButtonTitle = Instance.new("TextLabel")
+			resetListButtonTitle.Name = "title"
+			resetListButtonTitle.Parent = resetListButton
+			resetListButtonTitle.BackgroundTransparency = 1
+			resetListButtonTitle.Position = UDim2.new(0,0,0.1,0)
+			resetListButtonTitle.Size = UDim2.new(0,130,0,40)
+			resetListButtonTitle.Font = Enum.Font.Arimo
+			resetListButtonTitle.RichText = true
+			resetListButtonTitle.Text = "<b>Reset List</b>"
+			resetListButtonTitle.TextColor3 = Color3.fromRGB(255,255,255)
+			resetListButtonTitle.TextSize = 14
+			resetListButtonTitle.TextXAlignment = Enum.TextXAlignment.Left
+
+			local resetListButtonUIPadding = Instance.new("UIPadding")
+			resetListButtonUIPadding.Parent = resetListButtonTitle
+			resetListButtonUIPadding.PaddingLeft = UDim.new(0,15)
+
+			local resetListButtonImageLabel = Instance.new("ImageLabel")
+			resetListButtonImageLabel.Parent = resetListButton
+			resetListButtonImageLabel.BackgroundTransparency = 1
+			resetListButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			resetListButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			resetListButtonImageLabel.Rotation = 90
+			resetListButtonImageLabel.Image = "rbxassetid://88806457765010"
+
+			local resetListButtonButton = Instance.new("ImageButton")
+			resetListButtonButton.Name = "Button"
+			resetListButtonButton.Parent = resetListButton
+			resetListButtonButton.BackgroundTransparency = 1
+			resetListButtonButton.BorderSizePixel = 0
+			resetListButtonButton.Position = UDim2.new(0,1,0,0)
+			resetListButtonButton.Size = UDim2.new(0,298,0,50)
+			resetListButtonButton.ImageTransparency = 1
+
+			resetListButtonButton.MouseButton1Click:Connect(function()
+				for _, file in pairs(listfiles(ConfigFolder)) do
+					if isfile(file) then
+						delfile(file)
+					end
+				end
+				self._configs = {}
+				if self._configOptionButton then
+					self._configOptionButton.Text = "<b>--</b>"
+				end
+				if self._configOptionsHolder then
+					for _, child in pairs(self._configOptionsHolder:GetChildren()) do
+						if child:IsA("TextButton") then
+							child:Destroy()
+						end
+					end
+					self._configOptionsHolder.Size = UDim2.new(0,134,0,0)
 				end
 			end)
 		end
@@ -1099,6 +1289,10 @@ function NovaLib:CreateWindow(Settings)
 			labelHoldertitleUIPadding.Parent = labelHoldertitle
 			labelHoldertitleUIPadding.PaddingLeft = UDim.new(0, 15)
 
+			function Label:SetText(NewText)
+				labelHoldertitle.Text = "<b>" .. NewText .. "</b>"
+			end
+
 			return Label
 		end
 
@@ -1162,6 +1356,10 @@ function NovaLib:CreateWindow(Settings)
 			contentUIPadding.PaddingBottom = UDim.new(0,10)
 
 			paragraphHolder.AutomaticSize = Enum.AutomaticSize.Y
+
+			function Paragraph:SetContent(NewContent)
+				content.Text = "<b>" .. NewContent .. "</b>"
+			end
 
 			return Paragraph
 		end
