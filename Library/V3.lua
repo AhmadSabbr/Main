@@ -62,7 +62,11 @@ function NovaLib:CreateWindow(Settings)
 	mainFrameHolder.BorderSizePixel = 0
 	mainFrameHolder.AnchorPoint = Vector2.new(0.5, 0.5)
 	mainFrameHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
-	mainFrameHolder.Size = UDim2.new(0,580,0,530)
+	if UserInputService.TouchEnabled then
+		mainFrameHolder.Size = UDim2.new(0,500,0,450)
+	else
+		mainFrameHolder.Size = UDim2.new(0,580,0,530)
+	end
 
 	local mainFrameHolderUIScale = Instance.new("UIScale")
 	mainFrameHolderUIScale.Scale = 1
