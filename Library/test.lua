@@ -1,8 +1,9 @@
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
-local TextService = game:GetService("TextService")
 local HttpService = game:GetService("HttpService")
+local TextService = game:GetService("TextService")
 local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
 local CoreGui = game:GetService("CoreGui")
 
 local screenGui = CoreGui:FindFirstChild("Library")
@@ -12,6 +13,8 @@ end
 
 local NovaLib = {}
 function NovaLib:CreateWindow(Settings)
+	local Player = Players.LocalPlayer
+	local PlayerFolder = ConfigFolder.."/"..Player.UserId.."_"..game.PlaceId
 	local Title = Settings.Title or ""
 	local minimizeKeybind = Settings.MinimizeKeybind
 	local minimizeKey = Settings.MinimizeKey
@@ -756,6 +759,10 @@ function NovaLib:CreateWindow(Settings)
 			self._configListCreated = true
 			self._configs = {}
 
+			if not isfolder(PlayerFolder) then
+				makefolder(PlayerFolder)
+			end
+
 			local configListHolder = Instance.new("Frame")
 			configListHolder.Name = "configListHolder"
 			configListHolder.Parent = self.featuresContainer
@@ -846,7 +853,6 @@ function NovaLib:CreateWindow(Settings)
 
 			local function createOption(name)
 				table.insert(self._configs,name)
-
 				local option = Instance.new("TextButton")
 				option.Parent = configOptionsHolder
 				option.BackgroundTransparency = 1
@@ -866,7 +872,7 @@ function NovaLib:CreateWindow(Settings)
 				resizeDropdown()
 			end
 
-			for _,file in pairs(listfiles(ConfigFolder)) do
+			for _,file in pairs(listfiles(PlayerFolder)) do
 				local name = file:match("([^/\\]+)%.json$")
 				if name then
 					createOption(name)
@@ -913,6 +919,14 @@ function NovaLib:CreateWindow(Settings)
 			saveConfigButtontitleUIPadding.Parent = saveConfigButtontitle
 			saveConfigButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
 
+			local saveConfigButtonImageLabel = Instance.new("ImageLabel")
+			saveConfigButtonImageLabel.Parent = saveConfigButton
+			saveConfigButtonImageLabel.BackgroundTransparency = 1
+			saveConfigButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			saveConfigButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			saveConfigButtonImageLabel.Rotation = 90
+			saveConfigButtonImageLabel.Image = "rbxassetid://88806457765010"
+
 			local saveConfigButtonButton = Instance.new("ImageButton")
 			saveConfigButtonButton.Name = "Button"
 			saveConfigButtonButton.Parent = saveConfigButton
@@ -921,12 +935,15 @@ function NovaLib:CreateWindow(Settings)
 			saveConfigButtonButton.Size = UDim2.new(0,298,0,50)
 			saveConfigButtonButton.Position = UDim2.new(0,1,0,0)
 
+			if not isfolder(PlayerFolder) then
+				makefolder(PlayerFolder)
+			end
+
 			saveConfigButtonButton.MouseButton1Click:Connect(function()
 				local name = self._configNameBox.Text
 				if not name or name == "" or name == "..." then return end
 
 				local data = {}
-
 				for _,control in pairs(self.Window._controls) do
 					if control.Type == "Toggle" then
 						data[control.Title] = control.Object:GetValue()
@@ -940,7 +957,7 @@ function NovaLib:CreateWindow(Settings)
 				end
 
 				local json = HttpService:JSONEncode(data)
-				writefile(ConfigFolder.."/"..name..".json",json)
+				writefile(PlayerFolder.."/"..name..".json", json)
 
 				if not table.find(self._configs,name) then
 					table.insert(self._configs,name)
@@ -995,6 +1012,14 @@ function NovaLib:CreateWindow(Settings)
 			loadConfigButtontitleUIPadding.Parent = loadConfigButtontitle
 			loadConfigButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
 
+			local loadConfigButtonImageLabel = Instance.new("ImageLabel")
+			loadConfigButtonImageLabel.Parent = loadConfigButton
+			loadConfigButtonImageLabel.BackgroundTransparency = 1
+			loadConfigButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			loadConfigButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			loadConfigButtonImageLabel.Rotation = 90
+			loadConfigButtonImageLabel.Image = "rbxassetid://88806457765010"
+
 			local loadConfigButtonButton = Instance.new("ImageButton")
 			loadConfigButtonButton.Name = "Button"
 			loadConfigButtonButton.Parent = loadConfigButton
@@ -1004,9 +1029,13 @@ function NovaLib:CreateWindow(Settings)
 			loadConfigButtonButton.Size = UDim2.new(0,298,0,50)
 			loadConfigButtonButton.ImageTransparency = 1
 
+			if not isfolder(PlayerFolder) then
+				makefolder(PlayerFolder)
+			end
+
 			loadConfigButtonButton.MouseButton1Click:Connect(function()
 				local name = self._configOptionButton.Text:gsub("<.->","")
-				local path = ConfigFolder.."/"..name..".json"
+				local path = PlayerFolder.."/"..name..".json"
 				if not isfile(path) then return end
 				local data = HttpService:JSONDecode(readfile(path))
 				for _,control in pairs(self.Window._controls) do
@@ -1055,6 +1084,14 @@ function NovaLib:CreateWindow(Settings)
 			autoLoadButtontitleUIPadding.Parent = autoLoadButtontitle
 			autoLoadButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
 
+			local autoLoadButtonImageLabel = Instance.new("ImageLabel")
+			autoLoadButtonImageLabel.Parent = autoLoadButton
+			autoLoadButtonImageLabel.BackgroundTransparency = 1
+			autoLoadButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			autoLoadButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			autoLoadButtonImageLabel.Rotation = 90
+			autoLoadButtonImageLabel.Image = "rbxassetid://88806457765010"
+
 			local autoLoadButtonButton = Instance.new("ImageButton")
 			autoLoadButtonButton.Name = "Button"
 			autoLoadButtonButton.Parent = autoLoadButton
@@ -1064,10 +1101,15 @@ function NovaLib:CreateWindow(Settings)
 			autoLoadButtonButton.Size = UDim2.new(0,298,0,50)
 			autoLoadButtonButton.ImageTransparency = 1
 
+			if not isfolder(PlayerFolder) then
+				makefolder(PlayerFolder)
+			end
+
 			autoLoadButtonButton.MouseButton1Click:Connect(function()
 				local name = self._configOptionButton.Text:gsub("<.->","")
 				if name == "" or name == "--" then return end
-				writefile(ConfigFolder.."/autoload.txt",name)
+
+				writefile(PlayerFolder.."/autoload.txt", name)
 			end)
 		end
 
@@ -1100,6 +1142,14 @@ function NovaLib:CreateWindow(Settings)
 			resetAutoLoadButtontitleUIPadding.Parent = resetAutoLoadButtontitle
 			resetAutoLoadButtontitleUIPadding.PaddingLeft = UDim.new(0,15)
 
+			local resetAutoLoadButtonImageLabel = Instance.new("ImageLabel")
+			resetAutoLoadButtonImageLabel.Parent = resetAutoLoadButton
+			resetAutoLoadButtonImageLabel.BackgroundTransparency = 1
+			resetAutoLoadButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			resetAutoLoadButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			resetAutoLoadButtonImageLabel.Rotation = 90
+			resetAutoLoadButtonImageLabel.Image = "rbxassetid://88806457765010"
+
 			local resetAutoLoadButtonButton = Instance.new("ImageButton")
 			resetAutoLoadButtonButton.Name = "Button"
 			resetAutoLoadButtonButton.Parent = resetAutoLoadButton
@@ -1110,8 +1160,9 @@ function NovaLib:CreateWindow(Settings)
 			resetAutoLoadButtonButton.ImageTransparency = 1
 
 			resetAutoLoadButtonButton.MouseButton1Click:Connect(function()
-				if isfile(ConfigFolder.."/autoload.txt") then
-					writefile(ConfigFolder.."/autoload.txt","")
+				local autoLoadPath = PlayerFolder.."/autoload.txt"
+				if isfile(autoLoadPath) then
+					writefile(autoLoadPath,"")
 				end
 			end)
 		end
@@ -1148,6 +1199,14 @@ function NovaLib:CreateWindow(Settings)
 			resetListButtonUIPadding.Parent = resetListButtonTitle
 			resetListButtonUIPadding.PaddingLeft = UDim.new(0,15)
 
+			local resetListButtonImageLabel = Instance.new("ImageLabel")
+			resetListButtonImageLabel.Parent = resetListButton
+			resetListButtonImageLabel.BackgroundTransparency = 1
+			resetListButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
+			resetListButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			resetListButtonImageLabel.Rotation = 90
+			resetListButtonImageLabel.Image = "rbxassetid://88806457765010"
+
 			local resetListButtonButton = Instance.new("ImageButton")
 			resetListButtonButton.Name = "Button"
 			resetListButtonButton.Parent = resetListButton
@@ -1157,8 +1216,12 @@ function NovaLib:CreateWindow(Settings)
 			resetListButtonButton.Size = UDim2.new(0,298,0,50)
 			resetListButtonButton.ImageTransparency = 1
 
+			if not isfolder(PlayerFolder) then
+				makefolder(PlayerFolder)
+			end
+
 			resetListButtonButton.MouseButton1Click:Connect(function()
-				for _, file in pairs(listfiles(ConfigFolder)) do
+				for _, file in pairs(listfiles(PlayerFolder)) do
 					if isfile(file) then
 						delfile(file)
 					end
@@ -1249,9 +1312,9 @@ function NovaLib:CreateWindow(Settings)
 			labelHoldertitleUIPadding.Parent = labelHoldertitle
 			labelHoldertitleUIPadding.PaddingLeft = UDim.new(0, 15)
 
-            function Label:SetText(NewText)
-                labelHoldertitle.Text = "<b>" .. NewText .. "</b>"
-            end
+			function Label:SetText(NewText)
+				labelHoldertitle.Text = "<b>" .. NewText .. "</b>"
+			end
 
 			return Label
 		end
@@ -1317,9 +1380,9 @@ function NovaLib:CreateWindow(Settings)
 
 			paragraphHolder.AutomaticSize = Enum.AutomaticSize.Y
 
-            function Paragraph:SetContent(NewContent)
-                content.Text = "<b>" .. NewContent .. "</b>"
-            end
+			function Paragraph:SetContent(NewContent)
+				content.Text = "<b>" .. NewContent .. "</b>"
+			end
 
 			return Paragraph
 		end
