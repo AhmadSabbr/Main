@@ -54,6 +54,16 @@ function NovaLib:CreateWindow(Settings)
 	ScreenGui.Parent = CoreGui
 	ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+	local mainFrameHolder = Instance.new("Frame")
+	mainFrameHolder.Name = "mainFrameHolder"
+	mainFrameHolder.Parent = ScreenGui
+	mainFrameHolder.BackgroundColor3 = Color3.fromRGB(68, 12, 121)
+	mainFrameHolder.BackgroundTransparency = 0.4
+	mainFrameHolder.BorderSizePixel = 0
+	mainFrameHolder.AnchorPoint = Vector2.new(0.5, 0.5)
+	mainFrameHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
+	mainFrameHolder.Size = UDim2.new(0,580,0,530)
+	
 	if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
 		local oppenUIButton = Instance.new("ImageButton")
 		oppenUIButton.Name = "oppenUIButton"
@@ -75,20 +85,6 @@ function NovaLib:CreateWindow(Settings)
 		oppenUIButtonUICorner.CornerRadius = UDim.new(0, 50)
 		oppenUIButtonUICorner.Parent = oppenUIButton
 	else
-	end
-
-	local mainFrameHolder = Instance.new("Frame")
-	mainFrameHolder.Name = "mainFrameHolder"
-	mainFrameHolder.Parent = ScreenGui
-	mainFrameHolder.BackgroundColor3 = Color3.fromRGB(68, 12, 121)
-	mainFrameHolder.BackgroundTransparency = 0.4
-	mainFrameHolder.BorderSizePixel = 0
-	mainFrameHolder.AnchorPoint = Vector2.new(0.5, 0.5)
-	mainFrameHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
-	mainFrameHolder.Size = UDim2.new(0,580,0,530)
-	
-	if not UserInputService.TouchEnabled and mainFrameHolder.Visible == false then
-		CreateNotification("Main Frame Minimized", "Press Right Shift key to reactivate the UI.", 5)
 	end
 
 	local mainFrameHolderUIScale = Instance.new("UIScale")
@@ -505,6 +501,10 @@ function NovaLib:CreateWindow(Settings)
 		if notificationFrame then
 			notificationFrame:Destroy()
 		end
+	end
+	
+	if not UserInputService.TouchEnabled and mainFrameHolder.Visible == false then
+		CreateNotification("Main Frame Minimized", "Press Right Shift key to reactivate the UI.", 5)
 	end
 
 	function CreateDialog(Title, Dialog, Timer, YesCallback)
