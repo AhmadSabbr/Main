@@ -63,29 +63,27 @@ function NovaLib:CreateWindow(Settings)
 	mainFrameHolder.AnchorPoint = Vector2.new(0.5, 0.5)
 	mainFrameHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
 	mainFrameHolder.Size = UDim2.new(0,580,0,530)
-	
-	if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
-		local oppenUIButton = Instance.new("ImageButton")
-		oppenUIButton.Name = "oppenUIButton"
-		oppenUIButton.Parent = ScreenGui
-		oppenUIButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-		oppenUIButton.BackgroundTransparency = 1.000
-		oppenUIButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
-		oppenUIButton.BorderSizePixel = 0
-		oppenUIButton.Visible = not mainFrameHolder.Visible
-		oppenUIButton.Position = UDim2.new(0.237074405, 0, 0.472887754, 0)
-		oppenUIButton.Size = UDim2.new(0, 50, 0, 50)
-		oppenUIButton.Image = "rbxassetid://105707850580900"
 
-		oppenUIButton.MouseButton1Click:Connect(function()
-			mainFrameHolder.Visible = true
-		end)
+	local oppenUIButton = Instance.new("ImageButton")
+	oppenUIButton.Name = "oppenUIButton"
+	oppenUIButton.Parent = ScreenGui
+	oppenUIButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	oppenUIButton.BackgroundTransparency = 1.000
+	oppenUIButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+	oppenUIButton.BorderSizePixel = 0
+	oppenUIButton.Visible = false
+	oppenUIButton.Position = UDim2.new(0.237074405, 0, 0.472887754, 0)
+	oppenUIButton.Size = UDim2.new(0, 50, 0, 50)
+	oppenUIButton.Image = "rbxassetid://105707850580900"
 
-		local oppenUIButtonUICorner = Instance.new("UICorner")
-		oppenUIButtonUICorner.CornerRadius = UDim.new(0, 50)
-		oppenUIButtonUICorner.Parent = oppenUIButton
-	else
-	end
+	oppenUIButton.MouseButton1Click:Connect(function()
+		mainFrameHolder.Visible = true
+		oppenUIButton.Visible = false
+	end)
+
+	local oppenUIButtonUICorner = Instance.new("UICorner")
+	oppenUIButtonUICorner.CornerRadius = UDim.new(0, 50)
+	oppenUIButtonUICorner.Parent = oppenUIButton
 
 	local mainFrameHolderUIScale = Instance.new("UIScale")
 	mainFrameHolderUIScale.Scale = 1
@@ -502,7 +500,7 @@ function NovaLib:CreateWindow(Settings)
 			notificationFrame:Destroy()
 		end
 	end
-	
+
 	if not UserInputService.TouchEnabled and mainFrameHolder.Visible == false then
 		CreateNotification("Main Frame Minimized", "Press Right Shift key to reactivate the UI.", 5)
 	end
@@ -834,12 +832,13 @@ function NovaLib:CreateWindow(Settings)
 			configOptionButton.Position = UDim2.new(0.556666672,0,0.14,0)
 			configOptionButton.Size = UDim2.new(0,120,0,35)
 			configOptionButton.Font = Enum.Font.Arimo
-			configOptionButton.RichText = true
-			configOptionButton.Text = "<b>--</b>"
+			configOptionButton.RichText = false
+			configOptionButton.Text = ""
 			configOptionButton.TextColor3 = Color3.fromRGB(255,255,255)
 			configOptionButton.TextSize = 14
 			configOptionButton.TextXAlignment = Enum.TextXAlignment.Left
 			configOptionButton.ZIndex = 10
+			configOptionButton.ClipsDescendants = true
 
 			local configOptionButtonUIStroke = Instance.new("UIStroke")
 			configOptionButtonUIStroke.Parent = configOptionButton
@@ -855,11 +854,28 @@ function NovaLib:CreateWindow(Settings)
 			configOptionButtonUIPadding.Parent = configOptionButton
 			configOptionButtonUIPadding.PaddingLeft = UDim.new(0,8)
 
+			local listOptionNameLabel = Instance.new("TextLabel")
+			listOptionNameLabel.Name = "optionNameLabel"
+			listOptionNameLabel.Parent = configOptionButton
+			listOptionNameLabel.BackgroundTransparency = 1
+			listOptionNameLabel.Size = UDim2.new(1,0,1,0)
+			listOptionNameLabel.Font = Enum.Font.Arial
+			listOptionNameLabel.Text = "--"
+			listOptionNameLabel.TextColor3 = Color3.fromRGB(255,255,255)
+			listOptionNameLabel.TextSize = 14
+			listOptionNameLabel.TextXAlignment = Enum.TextXAlignment.Left
+			listOptionNameLabel.TextTruncate = Enum.TextTruncate.AtEnd
+
+			local listOptionNameLabelUIPadding = Instance.new("UIPadding")
+			listOptionNameLabelUIPadding.Parent = listOptionNameLabel
+			listOptionNameLabelUIPadding.PaddingLeft = UDim.new(0,4)
+
 			local configOptionButtonImageLabel = Instance.new("ImageLabel")
 			configOptionButtonImageLabel.Parent = configOptionButton
 			configOptionButtonImageLabel.BackgroundTransparency = 1
-			configOptionButtonImageLabel.Position = UDim2.new(0.75,0,0.15,0)
-			configOptionButtonImageLabel.Size = UDim2.new(0,25,0,25)
+			configOptionButtonImageLabel.AnchorPoint = Vector2.new(1,0.5)
+			configOptionButtonImageLabel.Position = UDim2.new(1,-6,0.5,0)
+			configOptionButtonImageLabel.Size = UDim2.new(0,20,0,20)
 			configOptionButtonImageLabel.Rotation = 90
 			configOptionButtonImageLabel.Image = "rbxassetid://88806457765010"
 
@@ -872,6 +888,7 @@ function NovaLib:CreateWindow(Settings)
 			configOptionsHolder.Size = UDim2.new(0,134,0,0)
 			configOptionsHolder.Visible = false
 			configOptionsHolder.ZIndex = 20
+			configOptionsHolder.ClipsDescendants = true
 
 			local configOptionsHolderUICorner = Instance.new("UICorner")
 			configOptionsHolderUICorner.Parent = configOptionsHolder
@@ -887,19 +904,21 @@ function NovaLib:CreateWindow(Settings)
 
 			local function createOption(name)
 				table.insert(self._configs,name)
+
 				local option = Instance.new("TextButton")
 				option.Parent = configOptionsHolder
 				option.BackgroundTransparency = 1
 				option.Size = UDim2.new(1,0,0,30)
 				option.Font = Enum.Font.Ubuntu
-				option.RichText = true
-				option.Text = "<b>"..name.."</b>"
+				option.RichText = false
+				option.Text = name
 				option.TextColor3 = Color3.fromRGB(255,255,255)
 				option.TextSize = 14
+				option.TextTruncate = Enum.TextTruncate.AtEnd
 				option.ZIndex = 21
 
 				option.MouseButton1Click:Connect(function()
-					configOptionButton.Text = name
+					listOptionNameLabel.Text = name
 					configOptionsHolder.Visible = false
 				end)
 
@@ -1889,8 +1908,8 @@ function NovaLib:CreateWindow(Settings)
 			dropdownHolder.BackgroundTransparency = 0.75
 			dropdownHolder.BorderSizePixel = 0
 			dropdownHolder.Size = UDim2.new(0,300,0,50)
-			dropdownHolder.ClipsDescendants = false
 			dropdownHolder.ZIndex = 10
+			dropdownHolder.ClipsDescendants = false
 
 			local corner = Instance.new("UICorner", dropdownHolder)
 
@@ -1915,12 +1934,13 @@ function NovaLib:CreateWindow(Settings)
 			optionButton.Position = UDim2.new(0.49,0,0.14,0)
 			optionButton.Size = UDim2.new(0,140,0,35)
 			optionButton.Font = Enum.Font.Arimo
-			optionButton.RichText = true
-			optionButton.Text = "<b>Options</b>"
+			optionButton.RichText = false
+			optionButton.Text = ""
 			optionButton.TextColor3 = Color3.fromRGB(255,255,255)
 			optionButton.TextSize = 14
 			optionButton.TextXAlignment = Enum.TextXAlignment.Left
 			optionButton.ZIndex = 10
+			optionButton.ClipsDescendants = true
 
 			local optionButtonUIStroke = Instance.new("UIStroke")
 			optionButtonUIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -1934,11 +1954,28 @@ function NovaLib:CreateWindow(Settings)
 			local pad2 = Instance.new("UIPadding", optionButton)
 			pad2.PaddingLeft = UDim.new(0,8)
 
+			local optionNameLabel = Instance.new("TextLabel")
+			optionNameLabel.Name = "optionNameLabel"
+			optionNameLabel.Parent = optionButton
+			optionNameLabel.BackgroundTransparency = 1
+			optionNameLabel.Size = UDim2.new(1,0,1,0)
+			optionNameLabel.Font = Enum.Font.Arial
+			optionNameLabel.Text = "Select An Option"
+			optionNameLabel.TextColor3 = Color3.fromRGB(255,255,255)
+			optionNameLabel.TextSize = 14
+			optionNameLabel.TextXAlignment = Enum.TextXAlignment.Left
+			optionNameLabel.TextTruncate = Enum.TextTruncate.AtEnd
+
+			local optionNameLabelPadding = Instance.new("UIPadding")
+			optionNameLabelPadding.Parent = optionNameLabel
+			optionNameLabelPadding.PaddingLeft = UDim.new(0,4)
+
 			local arrow = Instance.new("ImageLabel")
 			arrow.Parent = optionButton
 			arrow.BackgroundTransparency = 1
-			arrow.Position = UDim2.new(0.8,0,0.15,0)
-			arrow.Size = UDim2.new(0,25,0,25)
+			arrow.AnchorPoint = Vector2.new(1,0.5)
+			arrow.Position = UDim2.new(1,-6,0.5,0)
+			arrow.Size = UDim2.new(0,20,0,20)
 			arrow.Rotation = 90
 			arrow.Image = "rbxassetid://88806457765010"
 
@@ -1950,17 +1987,17 @@ function NovaLib:CreateWindow(Settings)
 			optionsHolder.Size = UDim2.new(0,134,0,0)
 			optionsHolder.Visible = false
 			optionsHolder.ZIndex = 20
+			optionsHolder.ClipsDescendants = true
 
 			local optionsCorner = Instance.new("UICorner", optionsHolder)
 			local layout = Instance.new("UIListLayout", optionsHolder)
 
 			local function updateText()
 				if #selected == 0 then
-					optionButton.Text = "<b>Options</b>"
-					return
+					optionNameLabel.Text = "Select An Option"
+				else
+					optionNameLabel.Text = table.concat(selected,", ")
 				end
-				local text = table.concat(selected,", ")
-				optionButton.Text = "<b>"..text.."</b>"
 			end
 
 			local function fire()
@@ -1973,11 +2010,8 @@ function NovaLib:CreateWindow(Settings)
 
 			local function selectOption(opt)
 				if Multi then
-					if table.find(selected,opt) then
-						table.remove(selected,table.find(selected,opt))
-					else
-						table.insert(selected,opt)
-					end
+					local i = table.find(selected,opt)
+					if i then table.remove(selected,i) else table.insert(selected,opt) end
 				else
 					selected = {opt}
 					open = false
@@ -1994,10 +2028,11 @@ function NovaLib:CreateWindow(Settings)
 				button.BorderSizePixel = 0
 				button.Size = UDim2.new(1,0,0,30)
 				button.Font = Enum.Font.Arimo
-				button.RichText = true
-				button.Text = "<b>"..opt.."</b>"
+				button.RichText = false
+				button.Text = opt
 				button.TextColor3 = Color3.fromRGB(255,255,255)
 				button.TextSize = 14
+				button.TextTruncate = Enum.TextTruncate.AtEnd
 
 				button.MouseButton1Click:Connect(function()
 					selectOption(opt)
@@ -2030,17 +2065,11 @@ function NovaLib:CreateWindow(Settings)
 				buttons[opt] = nil
 
 				for i,v in ipairs(Options) do
-					if v == opt then
-						table.remove(Options,i)
-						break
-					end
+					if v == opt then table.remove(Options,i) break end
 				end
 
 				for i,v in ipairs(selected) do
-					if v == opt then
-						table.remove(selected,i)
-						break
-					end
+					if v == opt then table.remove(selected,i) break end
 				end
 
 				optionsHolder.Size = UDim2.new(0,134,0,#Options*30)
@@ -2052,11 +2081,7 @@ function NovaLib:CreateWindow(Settings)
 			end
 
 			function Dropdown:Set(v)
-				if Multi then
-					selected = v
-				else
-					selected = {v}
-				end
+				selected = Multi and v or {v}
 				updateText()
 				fire()
 			end
